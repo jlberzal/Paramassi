@@ -1,0 +1,157 @@
+
+{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+
+    
+<link rel="stylesheet" href="/static/app/app2.css">
+
+
+
+
+{% block content %}
+  	<!--- <h1>Calculo de Protecciones</h1> --->
+  	
+  	<div class="box-grey">
+       <h3> Datos de Cuña </h3>
+       
+ 		{% if TipoC == "C1" %} <div class="box-hitab"> Cuña 1</div>  
+ 		{% else %} <div class="box-tab"> <a href= "{{url_for('core.calc_prot',TipoC = "C1", TipoProt = TipoProt ) }} method = "POST">Cuña 1</a></div>{% endif %}
+ 		{% if TipoC == "C2" %} <div class="box-hitab"> Cuña 2</div>  
+ 		{% else %} <div class="box-tab"> <a href= "{{url_for('core.calc_prot',TipoC = "C2",TipoProt=TipoProt)}} method = "POST">Cuña 2</a></div>{% endif %}
+ 		{% if TipoC == "C3" %} <div class="box-hitab"> Cuña 3</div>  
+ 		{% else %} <div class="box-tab"> <a href= "{{url_for('core.calc_prot',TipoC = "C3",TipoProt=TipoProt)}} method = "POST">Cuña 3</a></div>{% endif %}
+ 		{% if TipoC == "C4" %} <div class="box-hitab"> Cuña 4</div>  
+ 		{% else %} <div class="box-tab"> <a href= "{{url_for('core.calc_prot',TipoC = "C4",TipoProt=TipoProt)}}"method = "POST">Cuña 4</a></div>{% endif %}
+        <br>
+        <br>
+ 		<div class="box-darkgrey"> 
+ 		
+ 		<form action="{{ url_for('core.calc_prot',TipoC=TipoC, TipoProt=TipoProt) }}" method="POST">
+
+		 	{{ form.hidden_tag() }}
+ 		
+ 		
+ 		{% if TipoC == "C1" %}
+ 		
+ 		<br>{{ form.h1.label }}{{ form.h1 }}
+		<br>{{ form.d.label }}{{ form.d }}
+    	<br>{{ form.b.label }}{{ form.b }}
+    	<br>{{ form.Coh.label }}{{ form.Coh }}
+    	<br>{{ form.Roz.label }}{{ form.Roz}}
+    	<br>{{ form.Dens.label }}{{ form.Dens }}
+    	<br>{{ form.AcSis.label }}{{ form.AcSis }}
+    	
+		{% elif  TipoC == "C2" %}
+		
+ 		<br>{{ form.h1.label }}{{ form.h1 }}
+ 		<br>{{ form.h2.label }}{{ form.h2 }}
+    	<br>{{ form.d.label }}{{ form.d }}
+    	<br>{{ form.b.label }}{{ form.b }}
+    	<br>{{ form.Coh.label }}{{ form.Coh }}
+    	<br>{{ form.Roz.label }}{{ form.Roz}}
+    	<br>{{ form.Dens.label }}{{ form.Dens }}
+    	<br>{{ form.AcSis.label }}{{ form.AcSis }}
+		
+		{% elif  TipoC == "C3" %}
+		
+ 		<br>{{ form.h1.label }}{{ form.h1 }}
+    	<br>{{ form.d.label }}{{ form.d }}    	
+    	<br>{{ form.L.label }}{{ form.L }}
+    	<br>{{ form.Dens.label }}{{ form.Dens }}
+ 		
+		{% elif  TipoC == "C4" %}
+		
+ 		<br>{{ form.h1.label }}{{ form.h1 }}
+		<br>{{ form.L.label }}{{ form.L }}
+    	<br>{{ form.d.label }}{{ form.d }}
+    	<br>{{ form.b.label }}{{ form.b }}
+    	<br>{{ form.Coh.label }}{{ form.Coh }}
+    	<br>{{ form.Roz.label }}{{ form.Roz}}
+    	<br>{{ form.Dens.label }}{{ form.Dens }}
+    	<br>{{ form.AcSis.label }}{{ form.AcSis }}
+    	
+		{% endif %}
+		</div>	
+ 		</div>
+ 		
+<div class="box-grey">
+       <h3> Datos de Proteccion </h3>
+       
+       <!--- Menu tipo tabs de proteccion --->
+       
+ 		{% if TipoProt == "ProActive" %} <div class="box-hitab"> ProActive</div>  
+ 		{% else %} <div class="box-tab"> <a href= "{{url_for('core.calc_prot',TipoC = TipoC, TipoProt = "ProActive")}} method = "POST">Proactive</a></div>{% endif %}
+ 		{% if TipoProt == "ProActiveST" %} <div class="box-hitab"> ProActiveST</div>  
+ 		{% else %} <div class="box-tab"> <a href= "{{url_for('core.calc_prot',TipoC = TipoC, TipoProt = "ProActiveST")}} method = "POST">Proactive ST</a></div>{% endif %}
+ 		{% if TipoProt == "NetProtect" %} <div class="box-hitab"> NetProtect</div>  
+ 		{% else %} <div class="box-tab"> <a href= "{{url_for('core.calc_prot',TipoC = TipoC, TipoProt = "NetProtect")}} method = "POST">NetProtect</a></div>{% endif %}
+ 		{% if TipoProt == "NetProtectST" %} <div class="box-hitab"> NetProtect ST</div>  
+ 		{% else %} <div class="box-tab"> <a href= "{{url_for('core.calc_prot',TipoC = TipoC, TipoProt = "NetProtectST")}}" method = "POST">NetProtect ST</a></div>{% endif %}
+		<br>
+ 		<br>
+ 		<div class="box-darkgrey"> 
+		
+	    <!---form action="{{ url_for('core.calc_prot',TipoC = "C1", TipoProt = "NetProtect") }}" method="POST"--->
+   
+	 	
+    	{{ form.hidden_tag() }}
+ 		
+ 		{% if TipoProt == "ProActive" %}
+
+ 		<h3>Malla de Triple Torsion </h3>
+ 		{{ form.TipoMalla.label }}{{ form.TipoMalla }}
+		
+		<h3>Anclajes</h3>		 		
+ 		{{ form.DistCor.label }}{{ form.DistCor }} 		
+
+		{% elif  TipoProt== "ProActiveST" %}
+		
+  		<h3>Malla Triple Torsion Reforzada</h3>
+ 		{{ form.TipoMalla.label }}{{ form.TipoMalla }}
+ 		<br>{{ form.TipoCableRefuerzo.label }}{{ form.TipoCableRefuerzo }}
+		
+		<h3>Bulones</h3>		 		
+ 		{{ form.SH_B.label }}{{ form.SH_B }}
+		<br>{{ form.SV_B.label }}{{ form.SV_B }}
+			
+		{% elif  TipoProt == "NetProtect" %}
+		
+ 		<h3>Red de Cable</h3>
+ 		{{ form.TipoRedNP.label }}{{ form.TipoRedNP }}
+ 		<br>{{ form.TipoCableRefuerzo.label }}{{ form.TipoCableRefuerzo }}
+		
+		<h3>Bulones</h3>	 		
+ 		{{ form.SH_B.label }}{{ form.SH_B }}
+		<br>{{ form.SV_B.label }}{{ form.SV_B }}
+	
+		{% elif  TipoProt == "NetProtectST" %}
+		
+ 		<h3>Red de Anillos</h3>
+		{{ form.TipoRedNPST.label }}{{ form.TipoRedNPST }}
+ 		<br>{{ form.TipoCableRefuerzo.label }}{{ form.TipoCableRefuerzo }}
+		
+		<h3>Bulones</h3>		 		
+ 		{{ form.SH_B.label }}{{ form.SH_B }}
+		<br>{{ form.SV_B.label }}{{ form.SV_B }}
+		    	
+		{% endif %}
+		
+		<!--- Campos comunes a todas las opciones --->
+		<br>{{ form.LongBulon.label }}{{ form.LongBulon }}
+		<br>{{ form.DiamAcero.label }}{{ form.DiamAcero }}
+		<br>{{ form.Adh.label }}{{ form.Adh }}
+		<br>{{ form.fck.label }}{{ form.fck }}
+		<br>{{ form.DiamPerf.label }}{{ form.DiamPerf }}
+		<br>
+		 
+   		<!---form action="{{ url_for('core.answer_question',question_id=1) }}" method=post--->
+
+  		<br>
+    	{{ form.submit }}
+		 <br>
+		</div>	
+ 		</div>
+
+ 	</div>	
+
+
+  {% endblock %}

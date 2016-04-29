@@ -1,0 +1,92 @@
+{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+
+{% block content %}
+		
+		
+        <h3> Calculos de {{ current_user.first_name or current_user.user_auth.username }}</h3>
+	
+		 <table>
+		
+		 <col width="160">
+		 <col width="40">
+		 <col width="40">
+		 <col width="40">
+		 <col width="65">
+		 <col width="65">
+		 <col width="65">
+		 <col width="65">
+		 <col width="65">
+		 <col width="65">
+		 <col width="65">
+		 <col width="65">
+		 <col width="65">
+		 <col width="65">
+		 <col width="65">
+		 <col width="65">
+		 <col width="65">
+		 <col width="65">
+		 <col width="65">
+		 <col width="65">
+		 <col width="65">
+				 
+		<tr bgcolor= "grey" >
+		<font color= "white">
+    		<th style= text-align:center;"><font color= "white">Fecha </th>
+    		<th style= text-align:center;"><font color= "white">Tipo Cuña</th>
+    		<th style= text-align:center;"><font color= "white">h1 </th>
+    		<th style= text-align:center;"><font color= "white">h2 </th>
+    		<th style= text-align:center;"><font color= "white">Espesor </th>
+    		<th style= text-align:center;"><font color= "white">Angulo </th>
+    		<th style= text-align:center;"><font color= "white">L </th>
+    		<th style= text-align:center;"><font color= "white">Coh. </th>
+    		<th style= text-align:center;"><font color= "white">Roz. </th>
+    		<th style= text-align:center;"><font color= "white">Dens. </th>
+    		<th style= text-align:center;"><font color= "white">Ac. Sis. </th>
+    		<th style= text-align:center;"><font color= "white">Tipo P. </th>
+    		<th style= text-align:center;"><font color= "white">D. Cor. </th>
+    		<th style= text-align:center;"><font color= "white">S.H. B. </th>
+    		<th style= text-align:center;"><font color= "white">S.V. B. </th>
+   			<th style= text-align:center;"><font color= "white">Long. Bulon</th>
+   			<th style= text-align:center;"><font color= "white">Diam. Acero</th>
+   			<th style= text-align:center;"><font color= "white">Adh.</th>
+   			<th style= text-align:center;"><font color= "white">fck </th>
+   			<th style= text-align:center;"><font color= "white">Diam. Perf.</th>
+   			<th style= text-align:center;"><font color= "white">Res.</th>
+   		</font>	
+    	</tr>  		
+
+		{% for calculation in calculations %}
+  		<tr class="border_bottom">
+    		<td style="padding:2px; text-align:center;">  {{ calculation.timestamp|truncate(17,true," ")}} 
+    		{% if current_user.is_admin() %}
+  			<p>{{calculation.user_email}}</p>
+  			{% endif %}
+    		</td>
+    		<td style="padding:2px; text-align:center;">  {{ calculation.TipoC}} </td>
+    		<td style="padding:2px; text-align:right;">  {{ calculation.h1}} </td>
+    		<td style="padding:2px; text-align:right;">  {{ calculation.h2}} </td>
+    		<td style="padding:2px; text-align:right;">  {{ calculation.d}} </td>
+    		<td style="padding:2px; text-align:right;">  {{ calculation.b}} </td>
+    		<td style="padding:2px; text-align:right;">  {{ calculation.l}} </td>
+     		<td style="padding:2px; text-align:right;">  {{ calculation.Coh}} </td>
+    		<td style="padding:2px; text-align:right;">  {{ calculation.roz}} </td>
+    		<td style="padding:2px; text-align:right;">  {{ calculation.Dens}} </td>
+    		<td style="padding:2px; text-align:right;">  {{ calculation.AcSis}} </td>
+    		<td style="padding:2px; text-align:right;">  {{ calculation.TipoProt}} </td>
+    		<td style="padding:2px; text-align:right;">  {{ calculation.DistCor}} </td>
+    		<td style="padding:2px; text-align:right;">  {{ calculation.SH_B}} </td>
+    		<td style="padding:2px; text-align:right;">  {{ calculation.SV_B}} </td>
+    		<td style="padding:2px; text-align:right;">  {{ calculation.LongBulon}} </td>
+    		<td style="padding:2px; text-align:right;">  {{ calculation.DiamAcero}} </td>
+    		<td style="padding:2px; text-align:right;">  {{ calculation.Adh}} </td>
+    		<td style="padding:2px; text-align:right;">  {{ calculation.fck}} </td>
+    		<td style="padding:2px; text-align:right;">  {{ calculation.DiamPerf}} </td>
+    		{% if calculation.FSC %} <td style="padding:2px; text-align:center;"> <a href="{{ url_for('core.display_calc', calc_id=calculation.id) }}" > OK </a> </td>
+    		{% else %} <td style="padding:2px; text-align:center;">  <a href="{{ url_for('core.display_calc', calc_id=calculation.id) }}" > KO </td> {% endif %}
+    		
+    		
+    	</tr>  		
+    	{% endfor %}
+		</table>
+		</div>
+  {% endblock %}

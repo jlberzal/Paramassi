@@ -1,0 +1,57 @@
+
+{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+{% set active_page ='post_question' %}
+
+{% block content %}
+  
+  	{% if success %}
+    	<p>Thank you for your message. We'll get back to you shortly.</p>   
+ 	{% else %}
+	<div class="box-grey" > 
+
+ 	<h3>Contacte con Paramassi</h3>
+ 	
+ 	
+    	<style>	
+		input {
+    		font: 1em sans-serif;
+    		float: right; 
+
+			    /* Para darle el mismo tamaño a todos los campos de texto */
+    		width: 400px;
+    		padding: 2px; 
+  			margin: 2px; 
+    		-moz-box-sizing: border-box;
+    		box-sizing: border-box;
+
+		    /* Para armonizar el look&feel del borde en los campos de texto */
+    		border: 1px solid #999;
+    		border-radius: 5px;
+			}
+		submit {
+ 			color: #fff;
+ 			float: left;
+ 			font-size: 0;
+ 			width: 135px;
+ 			height: 80px;
+ 			border: none;
+ 			background: #0c0 url(image) 0 0 no-repeat; 
+			}
+		</style>
+		<p><font color="white">Escriba su pregunta </font> </p>
+		<form action="{{ url_for('core.post_question') }}" method=post>
+    	{{ form.hidden_tag() }}
+
+
+    	{{ form.question_text}}
+    
+    	<br>
+    	<br>
+    	{{ form.submit }}
+  		</form>
+		<br>
+		<br>
+
+	</div>
+	{% endif %}
+  {% endblock %}

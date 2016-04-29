@@ -1,0 +1,133 @@
+       
+/*** Estilos de menus de calculos ***/
+
+h1 {font-size: 150% font-weight: bold; float: left;}
+
+h3 {font-size: 150%; font-weight: bold; padding: 0;
+	color: white} 
+
+.box-grey {background-color: grey;  margin: 10px; padding: 10px; width: 420px; float: left; border-radius: 10px;}     
+
+.box-darkred {background-color: darkred;  margin: 10px; padding: 10px; width: 370px; float: left; border-radius: 10px;}     
+
+
+.box-grey-center {background-color: grey;  width: 60%; margin: auto; padding: 10px;  border-radius: 10px; }     
+
+.box-darkgrey {background-color: darkgrey; padding: 20px; border: 0px solid black; border-radius: 10px;}     
+.box-grey2 {background-color: lightgrey; border-radius: 10px; padding: 20px ;}     
+
+.box-tab {background-color: white; color: black; width: 100px; text-align: center;
+			float: left;  padding-top: 10px;padding-bottom: 10px; border: 1px solid black; border-top-right-radius: 10px;border-top-left-radius: 10px;} 
+.box-hitab {background-color: darkgrey; color white; width: 100px; text-align: center;
+			float: left; padding-top: 10px;padding-bottom: 10px; border: 0px; border-top-right-radius: 10px;border-top-left-radius: 10px;} 
+
+.without-margins {background-color: darkred; width: 100%; float:left; }     			
+
+label {
+    /* Para asegurarse que todos los labels tienen el mismo tamaño y están alineados correctamente */
+
+
+    display: inline-block;
+    text-align: right;
+    color: white;
+
+    width: 220px;
+
+	}
+
+textarea {
+    /* Para alinear campos de texto multilínea con sus labels */
+    vertical-align: top;
+
+    /* Para dar suficiente espacio para escribir texto */
+    height: 5em;
+    width: 600px;
+
+    /* Para permitir a los usuarios cambiar el tamaño de cualquier textarea verticalmente
+        No funciona en todos los navegadores */
+    resize: vertical;
+}
+
+.textbox { 
+    border: 3px double #848484; 
+    outline:0; 
+    height:25px; 
+    width: 275px; 
+  } 
+
+flash          { background: #cee5F5; padding: 0.5em;
+                  border: 1px solid #aacbe2; }
+
+
+/* el estilo de presentacion de de datos introducidos */
+
+div.i2 {
+    font: 1em sans-serif;
+    float: right; 
+    background-color: white;
+    /* Para darle el mismo tamaño a todos los campos de texto */
+    width: 130px;
+    padding: 2px; 
+    padding-left: 10px; 
+    margin: 1px; margin-right: 30 px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    /* Para armonizar el look&feel del borde en los campos de texto */
+    border: 0px solid #999;
+    border-radius: 5px;
+
+    }
+
+div.i3 {
+    font: 1em sans-serif;
+    float: right; 
+    background-color: white;
+    /* Para darle el mismo tamaño a todos los campos de texto */
+    width: 130px;
+    padding: 2px; 
+    padding-left: 10px; 
+    margin: 1px; margin-right: 30 px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    /* Para armonizar el look&feel del borde en los campos de texto */
+    border: 3px solid grey;
+    border-radius: 5px;
+
+    }
+
+div.i4 {
+    /* Para asegurarse que todos los labels tienen el mismo tamaño y están alineados correctamente */
+
+    float: right;
+    color: white;
+    width: 220px;
+
+    }
+
+select {
+ width: 130px;
+    padding: 1px; 
+  	margin: 0px; 
+   	float: right; 
+
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    /* Para armonizar el look&feel del borde en los campos de texto */
+    border: 1px solid #999;
+    border-radius: 5px;
+
+}
+
+submit {
+ color: #fff;
+ float: left;
+ font-size: 0;
+ width: 135px;
+ height: 80px;
+ border: none;
+ background: #0c0 url(image) 0 0 no-repeat; 
+}
+

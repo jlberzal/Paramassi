@@ -1,0 +1,393 @@
+
+{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+
+{% block content %}
+  	
+  	<!--- Presentacion de resultados de calculo</h1> --->
+  	<!--- El formulario es igual que el de entrada de datos, pero solo de lectura ---> 
+  	
+  	<div class="box-grey">
+       <h3> Datos de Cuña </h3>
+       
+ 		{% if TipoC == "C1" %} <div class="box-hitab"> Cuña 1</div>  
+ 		{% else %} <div class="box-tab"> Cuña 1</div>{% endif %}
+ 		{% if TipoC == "C2" %} <div class="box-hitab"> Cuña 2</div>  
+ 		{% else %} <div class="box-tab">Cuña 2</div>{% endif %}
+ 		{% if TipoC == "C3" %} <div class="box-hitab"> Cuña 3</div>  
+ 		{% else %} <div class="box-tab"> Cuña 3</div>{% endif %}
+ 		{% if TipoC == "C4" %} <div class="box-hitab"> Cuña 4</div>  
+ 		{% else %} <div class="box-tab"> Cuña 4</div>{% endif %}
+		<br>
+ 		<div class="box-darkgrey"> 
+ 		
+ 		{% if TipoC == "C1" %}
+ 		
+ 			<br>{{ form.h1.label }}<div class=i2> {{ form.h1.data }} </div>
+			<br>{{ form.d.label }}<div class=i2> {{ form.d.data }} </div>
+    		<br>{{ form.b.label }}<div class=i2> {{ form.b.data }} </div>
+    		<br>{{ form.Coh.label }}<div class=i2> {{ form.Coh.data }} </div>
+    		<br>{{ form.Roz.label }}<div class=i2> {{ form.Roz.data}} </div>
+    		<br>{{ form.Dens.label }}<div class=i2> {{ form.Dens.data }} </div>
+    		<br>{{ form.AcSis.label }}<div class=i2> {{ form.AcSis.data }} </div>    	
+
+		{% elif  TipoC == "C2" %}
+		
+ 			<br>{{ form.h1.label }}<div class=i2> {{ form.h1.data }} </div>
+ 			<br>{{ form.h2.label }}<div class=i2> {{ form.h2.data }} </div>
+    		<br>{{ form.d.label }}<div class=i2> {{ form.d.data }} </div>
+    		<br>{{ form.b.label }}<div class=i2> {{ form.b.data }} </div>
+    		<br>{{ form.Coh.label }}<div class=i2> {{ form.Coh.data }} </div>
+    		<br>{{ form.Roz.label }}<div class=i2> {{ form.Roz.data }} </div>
+    		<br>{{ form.Dens.label }}<div class=i2> {{ form.Dens.data }} </div>
+    		<br>{{ form.AcSis.label }}<div class=i2> {{ form.AcSis.data }} </div>
+		
+		{% elif  TipoC == "C3" %}
+		
+ 			<br>{{ form.h1.label }}<div class=i2> {{ form.h1.data }} </div>
+    		<br>{{ form.d.label }}<div class=i2> {{ form.d.data }} </div>    	
+    		<br>{{ form.L.label }}<div class=i2> {{ form.L.data }} </div>
+    		<br>{{ form.Dens.label }}<div class=i2> {{ form.Dens.data }} </div>
+ 		
+		{% elif  TipoC == "C4" %}
+		
+			<br>{{ form.h1.label }}<div class=i2> {{ form.h1.data }} </div>
+ 			<br>{{ form.h2.label }}<div class=i2> {{ form.L.data }} </div>
+    		<br>{{ form.d.label }}<div class=i2> {{ form.d.data }} </div>
+    		<br>{{ form.b.label }}<div class=i2> {{ form.b.data }} </div>
+    		<br>{{ form.Coh.label }}<div class=i2> {{ form.Coh.data }} </div>
+    		<br>{{ form.Roz.label }}<div class=i2> {{ form.Roz.data }}</div>
+    		<br>{{ form.Dens.label }}<div class=i2> {{ form.Dens.data }} </div>
+    		<br>{{ form.AcSis.label }}<div class=i2> {{ form.AcSis.data }} </div>
+
+		{% endif %}
+		</div>	
+ 		</div>
+ 		
+		<div class="box-grey">
+       	<h3> Datos de Proteccion </h3>
+       
+       <!--- Menu tipo tabs de proteccion --->
+       
+ 		{% if TipoProt == "ProActive" %} <div class="box-hitab"> ProActive</div>  
+ 		{% else %} <div class="box-tab"> Proactive</div>{% endif %}
+ 		{% if TipoProt == "ProActiveST" %} <div class="box-hitab"> ProActiveST</div>  
+ 		{% else %} <div class="box-tab"> Proactive ST</div>{% endif %}
+ 		{% if TipoProt == "NetProtect" %} <div class="box-hitab"> NetProtect</div>  
+ 		{% else %} <div class="box-tab"> NetProtect</div>{% endif %}
+ 		{% if TipoProt == "NetProtectST" %} <div class="box-hitab"> NetProtect ST</div>  
+ 		{% else %} <div class="box-tab"> NetProtect ST</div>{% endif %}
+		<br>
+ 		<div class="box-darkgrey"> 
+		
+	    <!---form action="{{ url_for('core.calc_prot',TipoC = "C1", TipoProt = "NetProtect") }}" method="POST"--->
+   
+	 	
+    	{{ form.hidden_tag() }}
+ 		
+ 		{% if TipoProt == "ProActive" %}
+
+ 		<h3>Malla de Triple Torsion </h3>
+ 		{{ form.TipoMalla.label }}<div class=i2> {{ form.TipoMalla.data }} </div>
+		
+		<h3>Anclajes</h3>		 		
+ 		{{ form.DistCor.label }}<div class=i2> {{ form.DistCor.data }} </div> 		
+
+		{% elif  TipoProt== "ProActiveST" %}
+		
+  		<h3>Malla de Triple Torsion Reforzada</h3>
+ 		{{ form.TipoMalla.label }}<div class=i2> {{ form.TipoMalla.data }} </div>
+ 		<br>{{ form.TipoCableRefuerzo.label }}<div class=i2> {{ form.TipoCableRefuerzo.data }} </div>
+		
+		<h3>Bulones</h3>		 		
+ 		{{ form.SH_B.label }}<div class=i2> {{ form.SH_B.data }} </div>
+		<br>{{ form.SV_B.label }}<div class=i2> {{ form.SV_B.data }} </div>
+			
+		{% elif  TipoProt == "NetProtect" %}
+		
+ 		<h3>Red de Cable</h3>
+ 		{{ form.TipoRedNP.label }}<div class=i2> {{ form.TipoRedNP.data }} </div>
+ 		<br>{{ form.TipoCableRefuerzo.label }}<div class=i2> {{ form.TipoCableRefuerzo.data }} </div>
+		
+		<h3>Bulones</h3>	 		
+ 		{{ form.SH_B.label }}<div class=i2> {{ form.SH_B.data }} </div>
+		<br>{{ form.SV_B.label }}<div class=i2> {{ form.SV_B.data }} </div>
+	
+		{% elif  TipoProt == "NetProtectST" %}
+		
+ 		<h3>Red de Anillos</h3>
+		{{ form.TipoRedNPST.label }}<div class=i2> {{ form.TipoRedNPST.data }} </div>
+ 		<br>{{ form.TipoCableRefuerzo.label }}<div class=i2> {{ form.TipoCableRefuerzo.data }} </div>
+		
+		<h3>Bulones</h3>		 		
+ 		{{ form.SH_B.label }}<div class=i2> {{ form.SH_B.data }} </div>
+		<br>{{ form.SV_B.label }}<div class=i2> {{ form.SV_B.data }} </div>
+		    	
+		{% endif %}
+		
+		<!--- Campos comunes a todas las opciones --->
+		<br>{{ form.LongBulon.label }}<div class=i2> {{ form.LongBulon.data }} </div>
+		<br>{{ form.DiamAcero.label }}<div class=i2> {{ form.DiamAcero.data }} </div>
+		<br>{{ form.Adh.label }}<div class=i2> {{ form.Adh.data }} </div>
+		<br>{{ form.fck.label }}<div class=i2> {{ form.fck.data }} </div>
+		<br>{{ form.DiamPerf.label }}<div class=i2> {{ form.DiamPerf.data }} </div>
+		<br>
+
+		</div>	
+ 		</div>
+ 		
+ 		<!--- Presentacion de resultados --->		
+ 		 		
+ 		{% if Estable %}
+		
+			
+ 		{% else %}
+ 				
+ 		<div class="box-grey" >
+ 		<h3> Valores calculados </h3>
+       	<table width = "400px" > 
+       	<col width="140">
+		<col width="130">
+		<col width="130">
+	
+       	<tr>
+    		<td colspan = "3" style="height:15px; background-color:white;" >  <font color="grey", size="4"> <b> Datos cuña</font></td>
+    	</tr>	
+
+       	
+       	 {% if TipoC == "C3" %}
+  		<tr>
+    		<td align="right"> <font color="white"> <b> FR (kN) </font></td>
+    		<td align ="left"> <div class=i3>  {{ form.FR.data | round(3)}} </div> </td>
+    		<td> </td>
+    	</tr>
+       	
+       	{% else %}
+  		<tr>
+  		
+    		<td align="right"> <font color="white"> <b> FS inicial (kN) </font></td>
+			<td> <div class=i3>  {{ form.FSI.data | round(3)}} </div> </td>
+    		<td> </td>
+    	</tr>
+    	</tr>	
+  		<tr>
+    		<td align="right"> <font color="white"> <b> FR (kN) </font></td>
+    		<td> <div class=i3>  {{ form.FR.data | round(3)}} </div> </td>
+    		<td> </td>
+    	</tr>
+
+    	{% endif %}
+    	
+		{% if (TipoProt == "ProActive") %}
+    	
+    	<tr>
+    		<td colspan ="3" >  <font color="white"> <b> Resistencia MTT </font></td>
+    	</tr>	
+  		<tr>
+    		<td align="right"> <font color="white"> <b> R1 (kN) </font></td>
+    		<td> <div class=i3>  {{ form.R1.data | round(3)}} </div> </td>
+    		{% if form.R1Cumple.data %} <td align="lef"> <font color="aquamarine"> <b>  Cumple</font></td>
+			{% else %} <td align="left"> <font color="#660000"> <b> No Cumple </font></td> {% endif %}
+    	</tr>
+
+		<tr>
+    	<td colspan = "3" style="height:15px; background-color:white;" >  <font color="grey", size="4"> <b> Anclajes de coronacion</font></td>
+  		<tr>
+    		<td align="right"> <font color="white"> <b> PNd (kN) </font></td>
+    		<td> <div class=i3>  {{ form.PNd.data | round(3)}} </div> </td>
+    	</tr>
+    	<td colspan ="3" >  <font color="white"> <b> Tension del Acero </font></td>
+  		<tr>
+    		<td align="right"> <font color="white"> <b> P1 (kN) </font></td>
+    		<td> <div class=i3>  {{ form.P1.data | round(3)}} </div> </td>
+   			{% if form.P1Cumple.data %} <td align="left"> <font color="aquamarine"> <b>  Cumple</font></td>
+			{% else %} <td align="left"> <font color="#660000"> <b> No Cumple </font></td> {% endif %}
+		</tr>
+		<tr>
+    	<td colspan ="3" >  <font color="white"> <b> Arrancamiento </font></td>
+  		<tr>
+    		<td align="right"> <font color="white"> <b> P3 (kN) </font></td>
+    		<td> <div class=i3>  {{ form.P3.data | round(3)}} </div> </td>
+   			{% if form.P3Cumple.data %} <td align="right"> <font color="aquamarine"> <b>  Cumple</font></td>
+			{% else %} <td align="right"> <font color="#660000"> <b> No Cumple </font></td> {% endif %}
+		</tr>
+ 		<tr>
+    	<td colspan ="3" >  <font color="white"> <b> Deslizamiento </font></td>
+  		<tr>
+    		<td align="right"> <font color="white"> <b> P2 (kN) </font></td>
+    		<td> <div class=i3>  {{ form.P2.data | round(3)}} </div> </td>
+   			{% if form.P2Cumple.data %} <td align="left"> <font color="aquamarine"> <b>  Cumple</font></td>
+			{% else %} <td align="left"> <font color="#660000"> <b> No Cumple </font></td> {% endif %}
+		</tr>
+ 		<tr>
+    	<td colspan ="3" >  <font color="white"> <b> Cortante </font></td>
+  		<tr>
+    		<td align="right"> <font color="white"> <b> Vr (kN) </font></td>
+    		<td> <div class=i3>  {{ form.R2.data | round(3)}} </div> </td>
+   			{% if form.R2Cumple.data %} <td align="left"> <font color="aquamarine"> <b>  Cumple</font></td>
+			{% else %} <td align="left"> <font color="#660000"> <b> No Cumple </font></td> {% endif %}
+		</tr>
+ 		<tr bgcolor = "#660000" >
+    		<td height="10"> <font color="white"> <b> FS Final </font></td>
+    		<td> <div class=i3>  {{ form.FSfinal.data | round(3)}} </div> </td>
+    		<td> </td>
+ 		</tr>
+    	{% elif (TipoProt == "NetProtect") or (TipoProt == "NetProtectST")  %}
+		<tr>
+		  	<td colspan = "3" style="height:15px; background-color:white;" >  <font color="grey", size="4"> <b>Cable de cosido</font></td>
+    	</tr>	
+  		<tr>
+    		<td align="right"> <font color="white"> <b> R2 (kN) </font></td>
+    		<td> <div class=i3>  {{ form.R2.data | round(3)}} </div> </td>
+    		{% if form.R2Cumple.data %} <td align="left"> <font color="aquamarine"> <b>  Cumple</font></td>
+			{% else %} <td align="left"> <font color="#660000"> <b> No Cumple </font></td> {% endif %}
+    	</tr>
+		<tr>
+		  	<td colspan = "3" style="height:15px; background-color:white;" >  <font color="grey", size="4"> <b> Red</font></td>
+		<tr>
+    		<td align="right"> <font color="white"> <b> R1 (kN) </font></td>
+    		<td> <div class=i3>  {{ form.R1.data | round(3)}} </div> </td>
+    		{% if form.R1Cumple.data %} <td align="left"> <font color="aquamarine"> <b>  Cumple</font></td>
+			{% else %} <td align="left"> <font color="#660000"> <b> No Cumple </font></td> {% endif %}
+    	</tr>
+ 		<tr>
+ 		  	<td colspan = "3" style="height:15px; background-color:white;" >  <font color="grey", size="4"> <b> Bulones</font></td>
+		</tr>
+		<tr>
+    		<td align="right"> <font color="white"> <b> PNd (kN) </font></td>
+    		<td> <div class=i3>  {{ form.PNd.data | round(3)}} </div> </td>
+		</tr>
+ 		<tr>
+    	<td colspan ="3" >  <font color="white"> <b> Tension del Acero </font></td>
+  		<tr>
+    		<td align="right"> <font color="white"> <b> P1 (kN) </font></td>
+    		<td> <div class=i3>  {{ form.P1.data | round(3)}} </div> </td>
+   			{% if form.P1Cumple.data %} <td align="left"> <font color="aquamarine"> <b>  Cumple</font></td>
+			{% else %} <td align="left"> <font color="#660000"> <b> No Cumple </font></td> {% endif %}
+		</tr>
+		<tr>
+    	<td colspan ="3" >  <font color="white"> <b> Arrancamiento </font></td>
+  		<tr>
+    		<td align="right"> <font color="white"> <b> P3 (kN) </font></td>
+    		<td> <div class=i3>  {{ form.P3.data | round(3)}} </div> </td>
+   			{% if form.P3Cumple.data %} <td align="left"> <font color="aquamarine"> <b>  Cumple</font></td>
+			{% else %} <td align="left"> <font color="#660000"> <b> No Cumple </font></td> {% endif %}
+		</tr>
+ 		<tr>
+    	<td colspan ="3" >  <font color="white"> <b> Deslizamiento </font></td>
+  		<tr>
+    		<td align="right"> <font color="white"> <b> P2 (kN) </font></td>
+    		<td> <div class=i3>  {{ form.P2.data | round(3)}} </div> </td>
+   			{% if form.P2Cumple.data %} <td align="left"> <font color="aquamarine"> <b>  Cumple</font></td>
+			{% else %} <td align="left"> <font color="#660000"> <b> No Cumple </font></td> {% endif %}
+		</tr>
+
+
+		{% else %}
+		<!---- Si la malla no es Proactive hay varias opciones---->
+		
+		{% if (TipoProt == "NetProtect") or (TipoProt == "NetProtectST")  %}
+ 		<tr>
+ 		  	<td colspan = "3" style="height:15px; background-color:white;" >  <font color="grey", size="4"> <b> Cable de cosido</font></td>
+		</tr>
+  			<tr>
+    			<td align="right"> <font color="white"> <b> R2 (kN) </font></td>
+    			<td> <div class=i3>  {{ form.R2.data | round(3)}} </div> </td>
+    			{% if form.R2Cumple.data %} <td align="left"> <font color="aquamarine"> <b>  Cumple</font></td>
+				{% else %} <td align="left"> <font color="#660000"> <b> No Cumple </font></td> {% endif %}
+    		</tr>
+			<tr>
+    			<td colspan ="3" >  <font color="white"> <b> Red </font></td>
+  			<tr>
+    			<td align="right"> <font color="white"> <b> R1 (kN) </font></td>
+    			<td> <div class=i3>  {{ form.R1.data | round(3)}} </div> </td>
+    			{% if form.R1Cumple.data %} <td align="left"> <font color="aquamarine"> <b>  Cumple</font></td>
+				{% else %} <td align="left"> <font color="#660000"> <b> No Cumple </font></td> {% endif %}
+    		</tr>
+    		
+    		
+		{% elif (TipoProt == "ProActiveST") %}
+ 		<tr>
+ 		  	<td colspan = "3" style="height:15px; background-color:white;" >  <font color="grey", size="4"> <b> Malla reforzada</font></td>
+		</tr>
+  			<tr>
+    			<td align="right"> <font color="white"> <b> Rmar (kN) </font></td>
+    			<td> <div class=i3>  {{ form.R1R2.data | round(3)}} </div> </td>
+    			{% if form.R1R2Cumple.data %} <td align="left"> <font color="aquamarine"> <b>  Cumple</font></td>
+				{% else %} <td align="left"> <font color="#660000"> <b> No Cumple </font></td> {% endif %}
+    		</tr>
+		
+		{% endif %}
+		<!--- Y luego se presenta la información de los bulones que es siempre la misna --->
+		    	
+ 		<tr>
+ 		  	<td colspan = "3" style="height:15px; background-color:white;" >  <font color="grey", size="4"> <b> Bulones</font></td>
+		</tr>
+  		<tr>
+    		<td align="right"> <font color="white"> <b> PNd (kN) </font></td>
+    		<td> <div class=i3>  {{ form.PNd.data | round(3)}} </div> </td>
+    	</tr>
+		<tr>
+    	<td colspan ="3" >  <font color="white"> <b> Tension del Acero </font></td>
+    	</tr>
+  		<tr>
+    		<td align="right"> <font color="white"> <b> P1 (kN) </font></td>
+    		<td> <div class=i3>  {{ form.P1.data | round(3)}} </div> </td>
+   			{% if form.P1Cumple.data %} <td align="left"> <font color="aquamarine"> <b>  Cumple</font></td>
+			{% else %} <td align="left"> <font color="#660000"> <b> No Cumple </font></td> {% endif %}
+		</tr>
+    	<tr>
+    	<td colspan ="3" >  <font color="white"> <b> Arrancamiento </font></td>
+  		<tr>
+    		<td align="right"> <font color="white"> <b> P3 (kN) </font></td>
+    		<td> <div class=i3>  {{ form.P3.data | round(3)}} </div> </td>
+   			{% if form.P3Cumple.data %} <td align="left"> <font color="aquamarine"> <b>  Cumple</font></td>
+			{% else %} <td align="left"> <font color="#660000"> <b> No Cumple </font></td> {% endif %}
+		</tr>
+ 		<tr>
+    	<td colspan ="3" >  <font color="white"> <b> Deslizamiento </font></td>
+  		<tr>
+    		<td align="right"> <font color="white"> <b> P2 (kN) </font></td>
+    		<td> <div class=i3>  {{ form.P2.data | round(3)}} </div> </td>
+   			{% if form.P2Cumple.data %} <td align="left"> <font color="aquamarine"> <b>  Cumple</font></td>
+			{% else %} <td align="left"> <font color="#660000"> <b> No Cumple </font></td> {% endif %}
+		</tr>
+		{% if (TipoProt == "NetProtect") or (TipoProt == "NetProtectST")  %}
+	
+ 		<tr>
+    	<td colspan ="3" >  <font color="white"> <b> Cortante </font></td>
+  		<tr>
+    		<td align="right"> <font color="white"> <b> Vr (kN) </font></td>
+    		<td> <div class=i3>  {{ form.R2.data | round(3)}} </div> </td>
+   			{% if form.R2Cumple.data %} <td align="left"> <font color="aquamarine"> <b>  Cumple</font></td>
+			{% else %} <td align="left"> <font color="#660000"> <b> No Cumple </font></td> {% endif %}
+		</tr>
+		{% endif %}
+		{% endif %}	
+		
+		<tr bgcolor = "white" >
+		
+    		<td align=right> <font color="grey"> <b> FS Final </font></td>
+    		<td> <div class=i2>  {{ form.FSfinal.data | round(3)}} </div> </td>
+      		{% if form.FSfinalCumple.data %} <td align="left"> <font color="green"> <b>  Cumple</font></td>
+			{% else %} <td align="left"> <font color="#660000"> <b> No Cumple </font></td> {% endif %}
+		 		
+    		
+    	<td> </td>
+ 		</tr>
+		<tr >
+		
+    		<td></td>
+    		<td> </td>
+    		<td align = "center"><div class=i3>Imprimir</div></td>		 		
+    		
+    	<td> </td>
+ 		</tr>
+
+
+    	</table>
+        </div>
+  		    	
+		{% endif %}
+   
+ 	</div>	
+  {% endblock %}

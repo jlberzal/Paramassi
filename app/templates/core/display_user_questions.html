@@ -1,0 +1,59 @@
+{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+
+{% block content %}
+		
+		<br>
+  		<div class="box-grey-center">
+  		{% if current_user.is_admin() %}
+  		
+  		{% else %}
+       	<h3> Preguntas de {{ current_user.first_name or current_user.user_auth.username }}</h3>
+		{% endif %}
+		
+		{% for question in questions %}
+		
+		<div class=q_text>
+		
+		{{ question.body}}
+		
+		<br>
+   	 	
+   	 	<p><b>Enviado: {{question.timestamp |truncate(20,true," ")}}</b></p>
+   	 	
+  		{% if current_user.is_admin() %}
+  		<p><b>Por: {{question.user_email}}</b></p>
+  		{% endif %}
+	
+  		</div>
+  		
+  		<div class=q_ans>
+  		
+  		{% if question.answer==None %}
+  	
+  			 
+  		<p> Pendiente de respuesta </p>
+  		
+  		{% if current_user.is_admin() %}
+		<a href="{{ url_for('core.answer_question', question_id=question.id) }}" > Responder </a>
+  		{% endif %}
+	
+
+  	  	{% else %}
+  	
+  		<!--- no se por que aqui no vael truncate...
+  		--->
+		<p> Respondido por: {{ question.answer_email}} at {{ question.answer_timestamp }} </p>
+		
+  		{{question.answer}}
+  		
+  		{% endif %}
+  		
+  		</div>
+  		
+  		{% else %}
+    	
+    	<em>Unbelievable.  No entries here so far</em>
+  		
+  		{% endfor %}
+  		</div>
+  {% endblock %}
