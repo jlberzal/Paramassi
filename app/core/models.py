@@ -6,7 +6,7 @@ from flask_user import UserMixin
 from flask_user.forms import RegisterForm
 from flask_wtf import Form
 
-from wtforms import StringField, TextField, SubmitField, SelectField, BooleanField, FloatField, validators
+from wtforms import StringField, IntegerField, TextField, SubmitField, SelectField, BooleanField, FloatField, validators
 from app import db
 import math
 
@@ -129,6 +129,11 @@ class CalcForm(Form):
 	 choices=[('ProActive','ProActive'),('ProActiveST','ProActiveST'),('NetProtect','NetProtect'),('NetProtectST','NetProtectST')],validators=[validators.Optional()])
 
 # Nota: los valores anteriores se registran mediante cambios en las pestanhas, no son campos que se presenten 
+
+# valor para almacenar el indice de bd
+
+	id = IntegerField()
+
 
 	h1 = FloatField( label = 'Altura, h1 (m)', default=1.0,validators=[validators.InputRequired()])	
 	h2 = FloatField( label = 'Altura, h2 (m)', default=1.0,validators=[validators.Optional()])

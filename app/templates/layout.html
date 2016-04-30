@@ -106,8 +106,9 @@
         </div>
         			
  		<br>
-        <div id="main-div" class="with-margins">
+ 		<div class="fondogrisclaro" >
 
+        
         {% block pre_content %}{% endblock %}
 
         {# One-time system messages called Flash messages #}
@@ -130,16 +131,20 @@
         {% block post_content %}{% endblock %}
         </div>
 		</div>
-        <br/>
+     	<div class="banda-gris"> 
+        <!--- div id="footer-div" class="clearfix with-margins"---> 
+            <div class="pull-right" style="color:white;">&copy; 2016 Paramassi</div>
 
-
-   		 <div class="without-margins"> 
-        <!--- div id="footer-div" class="clearfix with-margins"--->
 			<img src="{{ url_for('static', filename = 'paramassi-logo-small.png') }}" width="200" height="42">     
         	<br>
-        	
+	        <text-color = "white";>
+	        	
+	        <p style="color:white;" padding-left =10px;> Avda. Jacarandas, 2, Esc. 3 - 4° | Oficina 419 (Edificio Crea)</p>
+	        
+			<p style="color:white;">46100 - Burjassot (Valencia, España)</p>
+			<p style="color:white;">Tel.: (+34) 96 136 39 61 - Fax: (+34) 96 136 39 42</p>
+			<p style="color:white;">central@paramassi.es</p>
             
-            <div class="pull-right">&copy; 2016 Paramassi</div>
         </div>
 
         <!-- Application specific JS -->

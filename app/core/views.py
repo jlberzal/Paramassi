@@ -162,10 +162,11 @@ def calc_prot(TipoC='C1',TipoProt='ProActive'):
 
 	print "TipoC = ",  TipoC
 	print "TipoProt = ",  TipoProt
-
 	form = CalcForm()
-#	form.initialize()
+
+
 	form.TipoC.data = TipoC
+	
 	if request.method == 'POST':
 			
 		if form.validate() == False:
@@ -279,6 +280,7 @@ def display_calc (calc_id):
 	
 	results = cur.fetchone()
 	
+	form.id.data = calc_id
 	form.TipoC.data = results[2]
 	form.h1.data= results[3]
 	form.h2.data= results[4]
@@ -318,6 +320,42 @@ def display_calc (calc_id):
 	
 	return render_template('core/calc_prot_res.html', title ='Calculo de Protecciones', TipoC = form.TipoC.data, TipoProt = form.TipoProt.data, Estable = False, form=form,success=True)
 	
+@core_blueprint.route('change_calc(/<int:calc_id>', methods=['GET', 'POST'])
+@login_required  # Limits access to authenticated users
+def change_calc (calc_id):
+	query = "select id, timestamp, TipoC, h1, h2, d, b, L, Coh, roz, Dens, AcSis, TipoProt, DistCor, SH_B, SV_B, LongBulon, DiamAcero, Adh, fck, DiamPerf, FSI, FR, R1, R1Cumple, R2, R2Cumple, R1R2, R1R2Cumple, PNd,  P1, P1Cumple, P2, P2Cumple, P3, P3Cumple,FSfinal, FSfinalCumple from calculations where id = %s" % calc_id
+	cur = db.session.execute(query)
+	
+	# reutilizamos el template de presentacion de resultados
+	
+	form = CalcForm()
+	
+	results = cur.fetchone()
+	
+	form.id.data = calc_id
+	form.TipoC.data = results[2]
+	form.h1.data= results[3]
+	form.h2.data= results[4]
+	form.d.data= results[5]
+	form.b.data= results[6]
+	form.L.data= results[7]
+	form.Coh.data= results[8]
+	form.Roz.data= results[9]
+	form.Dens.data= results[10]
+	form.AcSis.data= results[11]
+	form.TipoProt.data= results[12]
+	form.DistCor.data= results[13]
+	form.SH_B.data= results[14]
+	form.SV_B.data= results[15]
+	form.LongBulon.data= results[16]
+	form.DiamAcero.data= results[17]
+	form.Adh.data= results[18]
+	form.fck.data= results[19]
+	form.DiamPerf.data= results[20]
+	
+	return render_template('core/calc_prot.html', title ='Calculo de Protecciones', TipoC = form.TipoC.data, TipoProt = form.TipoProt.data, Estable = False, form=form,success=True)
+
+
 # Esto tiene que estar al final !!!!!! 
 # Register blueprint
 app.register_blueprint(core_blueprint)
