@@ -71,11 +71,11 @@ class MyRegisterForm(RegisterForm):
 
 # Define the User profile form
 class UserProfileForm(Form):
-    first_name = StringField('First name', validators=[
-        validators.DataRequired('First name is required')])
-    last_name = StringField('Last name', validators=[
-        validators.DataRequired('Last name is required')])
-    submit = SubmitField('Save')
+    first_name = StringField('Nombre', validators=[
+        validators.DataRequired('Se necesita dar un nombre')])
+    last_name = StringField('Apellido', validators=[
+        validators.DataRequired('Se necesita un apellido')])
+    submit = SubmitField('Guardar')
 
 # Nuevos tipos de datos para la aplicacion de Paramassi
 
@@ -132,22 +132,22 @@ class CalcForm(Form):
 
 # valor para almacenar el indice de bd
 
-	id = IntegerField()
+	id = IntegerField(label = 'ID', default=0)
 
 
-	h1 = FloatField( label = 'Altura, h1 (m)', default=1.0,validators=[validators.InputRequired()])	
-	h2 = FloatField( label = 'Altura, h2 (m)', default=1.0,validators=[validators.Optional()])
+	h1 = FloatField( label = 'Altura, h1 (m)', default=0,validators=[validators.InputRequired()])	
+	h2 = FloatField( label = 'Altura, h2 (m)', default=0,validators=[validators.Optional()])
 	# nota	se usa h1 como H en los casos correspondientes
-	d = FloatField( label = 'Espesor d(m)', default=1.0,validators=[validators.InputRequired()])
+	d = FloatField( label = 'Espesor d(m)', default=0,validators=[validators.InputRequired()])
 	
-	b = FloatField( label = 'Inclinacion b():', default=1.0,validators=[validators.Optional()])
-	L = FloatField( label = 'Longitud, L(m):', default=1.0,validators=[validators.Optional()])	
+	b = FloatField( label = 'Inclinacion b():', default=0,validators=[validators.Optional()])
+	L = FloatField( label = 'Longitud, L(m):', default=0,validators=[validators.Optional()])	
 	# nota L =1 en casos C1 y C2
 		
-	Coh = FloatField( label = 'Cohesion(kN/M2)', default=1.0,validators=[validators.Optional()])	
-	Roz = FloatField( label = 'Roz.Interno()', default=1.0,validators=[validators.Optional()])	
-	Dens = FloatField( label = 'Densidad(kN/m3)', default=1.0,validators=[validators.InputRequired()])	
-	AcSis = FloatField( label = 'Ac.Sismica (m/s2)', default=1.0,validators=[validators.Optional()])	
+	Coh = FloatField( label = 'Cohesion(kN/M2)', default=0,validators=[validators.Optional()])	
+	Roz = FloatField( label = 'Roz.Interno()', default=0,validators=[validators.Optional()])	
+	Dens = FloatField( label = 'Densidad(kN/m3)', default=0,validators=[validators.InputRequired()])	
+	AcSis = FloatField( label = 'Ac.Sismica (m/s2)', default=0,validators=[validators.Optional()])	
 
 # Datos de Anclajes
 	
@@ -170,55 +170,55 @@ class CalcForm(Form):
 # Datos de los bulones
 # --------------------
 
-	SH_B = FloatField( label = 'Separacion horizontal (m)', default=1.0)
-	SV_B = FloatField( label = 'Separacion vertical (m)', default=1.0)
-
+	SH_B = FloatField( label = 'Separacion horizontal (m)',  default=1.0,validators=[validators.Optional(),validators.NumberRange(min=0.00001, message='el valor debe ser mayor que cero') ])
+	SV_B = FloatField( label = 'Separacion vertical (m)',  default=1.0,validators=[validators.Optional(),validators.NumberRange(min=0.00001, message='el valor debe ser mayor que cero') ])
+		
 # Datos comunes
 # ------------- 
 
-	LongBulon = FloatField( label = 'Longitud, L(m)', default=1.0,validators=[validators.InputRequired()])	
+	LongBulon = FloatField( label = 'Longitud, L(m)', default=0,validators=[validators.InputRequired()])	
 	DiamAcero = SelectField( label = 'D. Acero (mm)',
-	 choices=[('160','16mm'),('20','20mm'),('25','25mm'),('28','28mm'),('32','32mm'),('40','40mm'),('50','50mm'),('63','63.5mm')], default='16')
+	 choices=[('16','16mm'),('20','20mm'),('25','25mm'),('28','28mm'),('32','32mm'),('40','40mm'),('50','50mm'),('63','63.5mm')], default='16')
 	 
-	Adh= FloatField( label = 'Adherencia (Mpa)', default=1.0,validators=[validators.InputRequired()])	
-	fck = FloatField( label = 'fck lechada (Mpa)', default=1.0,validators=[validators.InputRequired()])	
+	Adh= FloatField( label = 'Adherencia (Mpa)', default=0,validators=[validators.InputRequired()])	
+	fck = FloatField( label = 'fck lechada (Mpa)', default=0,validators=[validators.InputRequired()])	
 	DiamPerf = SelectField( label = 'D perforacion (mm)', 
 	choices=[('46','46mm'),('51','51mm'),('75','75mm'),('115','115mm'),('130','130mm'),('200','200mm')],default='46')
 	
 # Resultados de los calculos
 # --------------------------
 	# La superficie se calcula para cada tipo de cuna
-	Superficie = FloatField( label = 'Superficie')
+	Superficie = FloatField( label = 'Superficie', default = 0)
 	
 	# Coeficiente de seguridad inicial FSI 
-	FSI = FloatField(label  = 'FS Inicial')
+	FSI = FloatField(label  = 'FS Inicial', default = 0)
 	
 	# Fuerza Resultante FR
-	FR = FloatField(label  = 'FS Inicial')
-	R1 = FloatField(label  = 'FS Inicial')
-	R1Cumple = BooleanField()
-	R2 = FloatField(label  = 'FS Inicial')	
-	R2Cumple = BooleanField()
+	FR = FloatField(label  = 'FS Inicial', default = 0)
+	R1 = FloatField(label  = 'FS Inicial', default = 0)
+	R1Cumple = BooleanField( default = 0)
+	R2 = FloatField(label  = 'FS Inicial', default = 0)	
+	R2Cumple = BooleanField( default = 0)
 	# esto solo se usa para el caso MTT en realidad es la suma de R1 y R2
-	R1R2 = FloatField(label  = 'R1R2 (kN)')
-	R1R2Cumple = BooleanField()
+	R1R2 = FloatField(label  = 'R1R2 (kN)', default = 0)
+	R1R2Cumple = BooleanField( default = 0)
 
 
-	PNd = FloatField(label  = 'FS Inicial')
-	P1 = FloatField(label  = 'FS Inicial')
-	P1Cumple = BooleanField()
-	P2 = FloatField(label  = 'FS Inicial')	 
-	P2Cumple = BooleanField()
-	P3 = FloatField(label  = 'FS Inicial')	 
-	P3Cumple = BooleanField()
-	FR1 = FloatField(label  = 'R2 (kN)')
-	FR2 = FloatField(label  = 'R2 (kN)')
+	PNd = FloatField(label  = 'FS Inicial', default = 0)
+	P1 = FloatField(label  = 'FS Inicial', default = 0)
+	P1Cumple = BooleanField(default = 0)
+	P2 = FloatField(label  = 'FS Inicial', default = 0)	 
+	P2Cumple = BooleanField(default = 0)
+	P3 = FloatField(label  = 'FS Inicial', default = 0)	 
+	P3Cumple = BooleanField(default = 0)
+	FR1 = FloatField(label  = 'R2 (kN)', default = 0)
+	FR2 = FloatField(label  = 'R2 (kN)', default = 0)
 
-	FP1 = FloatField(label  = 'P1 (kN)')
-	FP2 = FloatField(label = 'P2 (kN)')	
-	FP3 = FloatField(label = 'P3 (kN)')	
-	FSfinal = FloatField (label = 'FS Final')	
-	FSfinalCumple = BooleanField()
+	FP1 = FloatField(label  = 'P1 (kN)', default = 0)
+	FP2 = FloatField(label = 'P2 (kN)', default = 0)	
+	FP3 = FloatField(label = 'P3 (kN)', default = 0)	
+	FSfinal = FloatField (label = 'FS Final', default = 0)	
+	FSfinalCumple = BooleanField(default = 0)
 	
 	submit = SubmitField('Validar')
 	
@@ -343,11 +343,11 @@ class CalcForm(Form):
 			L_ext = self.h1.data/math.sin(math.radians(self.b.data))*self.L.data/2
 			Peso = self.h1.data * self.d.data * self.Dens.data * self.L.data/3
 		
-		# 1,25*(PESO*SIN(ALPHA)-(PESO*COS(ALPHA)-PESO/9,81*ACSIS*SIN(ALPHA))*TAN(RADIANS(ROZ))+PESO/9,81*ACSIS*COS(ALPHA))
+			# 1,25*(PESO*SIN(ALPHA)-(PESO*COS(ALPHA)-PESO/9,81*ACSIS*SIN(ALPHA))*TAN(RADIANS(ROZ))+PESO/9,81*ACSIS*COS(ALPHA))
 		
-			self.FR.data = 1.25 * (Peso * math.sin(Alpha) - (Peso * math.cos(Alpha)-Peso/9.81*self.AcSis.data*math.sin(Alpha))
-				*math.tan(math.radians(self.Roz.data)) + Peso/9.81*self.AcSis.data*math.cos(Alpha))
-			self.FSI.data = (self.Coh.data*1*Lr+(Peso*math.cos(Alpha) - Peso/9.81*self.AcSis.data*math.sin(Alpha))*math.tan(math.radians(self.Roz.data)))/(Peso*math.sin(Alpha)+Peso/9.81*self.AcSis.data*math.cos(Alpha))
+			self.FR.data = 1.25 * (Peso * math.sin(Alpha) - (Peso * math.cos(Alpha)-Peso/9.81*self.AcSis.data*math.sin(Alpha)) * math.tan(math.radians(self.Roz.data)))
+			#+ Peso/9.81* self.AcSis.data *math.cos(Alpha))
+			self.FSI.data = (self.Coh.data*1*Lr+(Peso*math.cos(Alpha) - Peso/9.81*self.AcSis.data*math.sin(Alpha))*math.tan(math.radians(self.Roz.data)))/(Peso*math.sin(Alpha) + Peso/9.81*self.AcSis.data * math.cos(Alpha))
 			
 			self.Superficie.data = L_ext
 
@@ -415,7 +415,7 @@ class CalcForm(Form):
 		fyk = 500
 		
 		SeccionAcero = math.pi * float(self.DiamAcero.data) * float(self.DiamAcero.data) / 4 
-		
+		print "SeccionAcero:", SeccionAcero
 		self.P1.data = min (fpk/1.3*SeccionAcero, fyk/1.15*SeccionAcero) /1000
 		
 		# Arrancamiento P3lim
@@ -712,26 +712,32 @@ class CalcForm(Form):
 
 		# La resistencia minorada depende del tipo de cable, es un valor de tablas que se divide por 1,67
 		# R1U =  RD / 1,67 RD se obtiene segun el tipo de malla
-	
-		if self.TipoRedNP.data == 'Paneles 200':
-			RMin = 62/1.67
-		elif self.TipoRedNP.data == 'Paneles 250':
-			RMin = 51/1.67
-		elif self.TipoRedNP.data == 'Paneles 300':
-			RMin = 45/1.67
-		elif self.TipoRedNP.data == 'Paneles 400':
-			RMin = 34/1.67
-		elif self.TipoRedNPST.data == 'LitoStop 2/350':
-			RMin = 100/1.67
-		elif self.TipoRedNPST.data == 'LitoStop 2/300':
-			RMin = 106/1.67
-		elif self.TipoRedNPST.data == 'LitoStop 2/250':
-			RMin = 125//1.67
-		elif self.TipoRedNPST.data == 'LitoStop 3/350':
-			RMin = 150/1.67
-		elif self.TipoRedNPST.data == 'LitoStop 3/300':
-			RMin = 215/1.67
-			
+		
+		if self.TipoProt.data ==  'NetProtect':
+			print'NetProtect'
+			if self.TipoRedNP.data == 'Paneles 200':
+				RMin = 62/1.67
+			elif self.TipoRedNP.data == 'Paneles 250':
+				RMin = 51/1.67
+			elif self.TipoRedNP.data == 'Paneles 300':
+				RMin = 45/1.67
+			elif self.TipoRedNP.data == 'Paneles 400':
+				RMin = 34/1.67
+			else:
+				flash ('Error en definicion de Netprotect')
+		else:		
+			if self.TipoRedNPST.data == 'LitoStop 2/350':
+				RMin = 100/1.67
+			elif self.TipoRedNPST.data == 'LitoStop 2/300':
+				RMin = 106/1.67
+			elif self.TipoRedNPST.data == 'LitoStop 2/250':
+				RMin = 125//1.67
+			elif self.TipoRedNPST.data == 'LitoStop 3/350':
+				RMin = 150/1.67
+			elif self.TipoRedNPST.data == 'LitoStop 3/300':
+				RMin = 215/1.67
+			else:
+				flash ('Error en definicion de Netprotect ST')
 		# Valores de resistencia del cable
 		
 		if self.TipoCableRefuerzo.data == '8':
@@ -919,7 +925,40 @@ class CalcForm(Form):
 		self.DiamAcero.data  = 16.0 
 		self.Adh.data  = 0 
 		self.fck.data  = 0 
-		self.DiamPerf.data  = 46 
+		self.DiamPerf.data  = 46
+		
+		
+		
+	# inicializamos los valores de los resultados antes de hacer calculos
+	 
+	def initialize_results (self):
+		
+		self.Superficie = 0
+		self.FSI = 0
+		self.FR = 0
+		self.R1 = 0
+		self.R1cumple = 0
+		self.R1 = 0
+		self.R1cumple = 0
+		self.R2 = 0
+		self.R2cumple = 0
+		self.R1R2 = 0
+		self.R1R2cumple = 0
+		self.PNd = 0
+		self.P1 = 0
+		self.P1cumple = 0
+		self.P2 = 0
+		self.P2cumple = 0
+		self.P3 = 0
+		self.P3cumple = 0
+		self.FR1 = 0
+		self.FR2 = 0
+		self.FP1 = 0
+		self.FP2 = 0
+		self.FP3 = 0    
+		self.FSfinal = 0
+		self.FSfinalcumple = 0
+		
 		return (1) 	
 
 	

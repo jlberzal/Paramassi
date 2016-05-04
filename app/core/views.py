@@ -163,20 +163,19 @@ def calc_prot(TipoC='C1',TipoProt='ProActive'):
 	print "TipoC = ",  TipoC
 	print "TipoProt = ",  TipoProt
 	form = CalcForm()
-
-
 	form.TipoC.data = TipoC
+	form.TipoProt.data = TipoProt
 	
 	if request.method == 'POST':
 			
 		if form.validate() == False:
 			for field, errors in form.errors.items():
 				for error in errors:
-					flash(u"Error in the %s field - %s" % (getattr(form, field).label.text,error))
-					flash(u"value = %s" % (getattr(form, field).data))
+					flash(u"Error en la entrada: %s - %s" % (getattr(form, field).label.text,error))
 		
 			return render_template('core/calc_prot.html', TipoC = TipoC, TipoProt = TipoProt, form=form)
 			
+		# a = form.initialize_results()
 		
 		estable = form.Estabilidad()
 		
@@ -190,54 +189,67 @@ def calc_prot(TipoC='C1',TipoProt='ProActive'):
 				a = form.CoefSegProActiveST() 	
 			if ((TipoProt ==  'NetProtect') or TipoProt ==  ('NetProtectST')):
 				a = form.CoefSegNetProtect()
+			
 				
-			# Guardamos la infomracion en un registro de BD
-			
 			form.TipoProt.data = TipoProt
+	
+			# Guardamos la infomracion en un registro de BD
+			# Preparamos query 
+			query = 'insert into calculations (timestamp, user_id, user_email, TipoC, h1, h2, d, b, L, Coh, roz, Dens, AcSis, \
+			TipoProt, DistCor, SH_B, SV_B, LongBulon, DiamAcero, Adh, fck, DiamPerf, FSI, FR, R1, R1Cumple, R2, \
+			R2Cumple, R1R2, R1R2Cumple, PNd,  P1, P1Cumple, P2, P2Cumple, P3, P3Cumple,FSfinal, FSfinalCumple) \
+			values ("%s",%s,"%s","%s",%s,%s,%s,%s,%s,%s,%s,%s,%s,"%s",%s,%s,%s,%s,%s,%s,\
+			%s,%s,%s,%s,%s,%d,%s,%d,%s,%d,%s,%s,%d,%s,%d,%s,%d,%s,%d)'\
+			% (datetime.utcnow(),\
+			current_user.id,\
+			current_user.email,\
+			form.TipoC.data, \
+			form.h1.data, \
+			form.h2.data, \
+			form.d.data, \
+			form.b.data, \
+			form.L.data, \
+			form.Coh.data, \
+			form.Roz.data, \
+			form.Dens.data, \
+			form.AcSis.data, \
+			form.TipoProt.data, \
+			form.DistCor.data, \
+			form.SH_B.data, \
+			form.SV_B.data, \
+			form.LongBulon.data, \
+			form.DiamAcero.data, \
+			form.Adh.data, \
+			form.fck.data, \
+			form.DiamPerf.data, \
+			form.FSI.data, \
+			form.FR.data, \
+			form.R1.data, \
+			form.R1Cumple.data, \
+			form.R2.data, \
+			form.R2Cumple.data, \
+			form.R1R2.data, \
+			form.R1R2Cumple.data, \
+			form.PNd.data,\
+			form.P1.data, \
+			form.P1Cumple.data, \
+			form.P2.data, \
+			form.P2Cumple.data, \
+			form.P3.data, \
+			form.P3Cumple.data, \
+			form.FSfinal.data, \
+			form.FSfinalCumple.data)
+	
+			cur = db.session.execute(query)
+	
+	
+			id = cur.lastrowid
 			
-			usermail = current_user.email
-			question = CalcProt(timestamp=datetime.utcnow(), \
-				author=current_user, user_email = usermail, \
-				TipoC = form.TipoC.data, \
-				h1 = form.h1.data, \
-				h2 = form.h2.data, \
-				d = form.d.data, \
-				b = form.b.data, \
-				L = form.L.data, \
-				Coh = form.Coh.data, \
-				Roz = form.Roz.data, \
-				Dens = form.Dens.data, \
-				AcSis = form.AcSis.data, \
-				TipoProt = form.TipoProt.data, \
-				DistCor = form.DistCor.data, \
-				SH_B = form.SH_B.data, \
-				SV_B = form.SV_B.data, \
-				LongBulon = form.LongBulon.data, \
-				DiamAcero = form.DiamAcero.data, \
-				Adh = form.Adh.data, \
-				fck = form.fck.data, \
-				DiamPerf = form.DiamPerf.data, \
-				FSI = form.FSI.data, \
-				FR = form.FR.data, \
-				R1 = form.R1.data, \
-				R1Cumple = form.R1Cumple.data, \
-				R2 = form.R2.data, \
-				R2Cumple = form.R2Cumple.data, \
-				R1R2 = form.R1R2.data, \
-				R1R2Cumple = form.R1R2Cumple.data, \
-				PNd = form.PNd.data, \
-				P1 = form.P1.data, \
-				P1Cumple = form.P1Cumple.data, \
-				P2 = form.P2.data, \
-				P2Cumple = form.P2Cumple.data, \
-				P3 = form.P3.data, \
-				P3Cumple = form.P3Cumple.data, \
-				FSfinal = form.FSfinal.data, \
-				FSfinalCumple = form.FSfinalCumple.data \
-			)
-			db.session.add(question)
-			db.session.commit()
-		
+			cur = db.session.commit()
+			form.id.data= id
+			
+			print "id=", id
+			
 		return render_template('core/calc_prot_res.html', title ='Calculo de Protecciones', TipoC = TipoC, TipoProt = TipoProt, Estable = estable, form=form,success=True)
 			
 	elif request.method == 'GET':
@@ -356,6 +368,36 @@ def change_calc (calc_id):
 	return render_template('core/calc_prot.html', title ='Calculo de Protecciones', TipoC = form.TipoC.data, TipoProt = form.TipoProt.data, Estable = False, form=form,success=True)
 
 
+@core_blueprint.route('change_prot/String:<TipoProt>/<int:calc_id>', methods=['GET', 'POST'])
+@login_required  # Limits access to authenticated users
+def change_prot (TipoProt, calc_id=1):
+	query = "select id, timestamp, TipoC, h1, h2, d, b, L, Coh, roz, Dens, AcSis, TipoProt, DistCor, SH_B, SV_B, LongBulon, DiamAcero, Adh, fck, DiamPerf, FSI, FR, R1, R1Cumple, R2, R2Cumple, R1R2, R1R2Cumple, PNd,  P1, P1Cumple, P2, P2Cumple, P3, P3Cumple,FSfinal, FSfinalCumple from calculations where id = %s" % calc_id
+	cur = db.session.execute(query)
+	form = CalcForm()
+	results = cur.fetchone()
+	
+	# reutilizamos el template de presentacion de resultados
+	print " Change prot to TipoC = ",  form.TipoC.data
+	print "TipoProt = ",  TipoProt
+
+	form.id.data = calc_id
+	form.TipoC.data = results[2]
+	form.h1.data= results[3]
+	form.h2.data= results[4]
+	form.d.data= results[5]
+	form.b.data= results[6]
+	form.L.data= results[7]
+	form.Coh.data= results[8]
+	form.Roz.data= results[9]
+	form.Dens.data= results[10]
+	form.AcSis.data= results[11]
+	form.TipoProt.data= results[12]
+
+	form.TipoProt.data = TipoProt
+
+	return render_template('core/calc_prot.html', TipoC = form.TipoC.data, TipoProt = TipoProt, form=form,  method = "POST")
+		
+	
 # Esto tiene que estar al final !!!!!! 
 # Register blueprint
 app.register_blueprint(core_blueprint)

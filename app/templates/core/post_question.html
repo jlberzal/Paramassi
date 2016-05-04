@@ -3,48 +3,56 @@
 {% set active_page ='post_question' %}
 
 {% block content %}
-  
+	<br>
+	<br>  
   	{% if success %}
     	<p>Thank you for your message. We'll get back to you shortly.</p>   
  	{% else %}
-	<div class="box-grey" > 
 
- 	<h3>Contacte con Paramassi</h3>
- 	
- 	
+
+		<div style="background-color:white; width: 440px; height: 350px; position: relative; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);  padding: 20px; margin-left:auto; margin-right:auto; ">
+ 		
+ 		<h3> Contacte con Paramassi </h3>
+    	
     	<style>	
-		input {
+		input[type=text] {
     		font: 1em sans-serif;
-    		float: right; 
-
+    		
 			    /* Para darle el mismo tamaño a todos los campos de texto */
     		width: 400px;
+    		height:200px;
+    		line-height: 21px;
     		padding: 2px; 
-  			margin: 2px; 
-    		-moz-box-sizing: border-box;
-    		box-sizing: border-box;
-
-		    /* Para armonizar el look&feel del borde en los campos de texto */
+    		padding-top: 20px;; 	
+    	
+  			 /* Para armonizar el look&feel del borde en los campos de texto */
     		border: 1px solid #999;
     		border-radius: 5px;
 			}
-		submit {
- 			color: #fff;
- 			float: left;
- 			font-size: 0;
- 			width: 135px;
- 			height: 80px;
- 			border: none;
- 			background: #0c0 url(image) 0 0 no-repeat; 
-			}
+			
+		
+		input[type=submit] {
+    		padding:5px 15px;
+    		color: white; 
+    		background:url({{ url_for('static', filename = 'Submit.png') }}); 
+    		width: 160px;
+    		height:22px;
+    		text-align:left; 	
+    		border:0 none;
+    		cursor:pointer;
+			}		
 		</style>
-		<p><font color="white">Escriba su pregunta </font> </p>
+		<p><font color="black">Escriba su pregunta </font> </p>
+		
 		<form action="{{ url_for('core.post_question') }}" method=post>
     	{{ form.hidden_tag() }}
 
-
+		<div style="vertical-align: top">
     	{{ form.question_text}}
-    
+    	<br>
+    	<br>
+    	<br>
+    	<br>
     	<br>
     	<br>
     	{{ form.submit }}

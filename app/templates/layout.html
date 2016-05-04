@@ -51,7 +51,6 @@
         
         
         <div class="without-margins"> 
-        
   
             {% if current_user.is_authenticated %}
             	{% if current_user.is_admin() %}
@@ -59,8 +58,8 @@
             		('core.list_calculations', 'display_user_calculations', 'Listado de calculos'),
     				('core.list_questions', 'display_user_questions', 'Historico de preguntas'),
        				] -%}
+       				
 				{% else %}	
-            
             
             	<!--- Se presenta el menu de usuario normal--->
             
@@ -74,41 +73,31 @@
 					{% set active_page = active_page|default('post_question') -%}
 					
     			{% endif%}
-            
-            	
-			<div id="header">
-			<ul>
-			{% for href, id, caption in navigation_bar %}
-  				<li{% if id == active_page %} class="selected"{% endif%}>
-  				<a href="{{ url_for(href|e) }}">{{ caption|e }}</a></li>
-			{% endfor %}
-			</ul>
-        
-			<!---
-    		<ul>
-			<li><a href="{{ url_for('core.post_question') }}">Contactar</a></li>
-			<li><a href="{{ url_for('core.list_questions') }}">Historial</a></li>
-			<li id="selected"><a href="#">That</a></li>
-			<li><a href="#">The Other</a></li>
-			<li><a href="#">Banana</a></li>
-			</ul>
-			--->
-			</div>
-
+    			
+    			    	
+				<div id="header">
+				<ul>
+				{% for href, id, caption in navigation_bar %}
+  					<li{% if id == active_page %} class="selected"{% endif%}>
+  					<a href="{{ url_for(href|e) }}">{{ caption|e }}</a></li>
+				{% endfor %}
+				</ul>
+ 				</div>
+    			
+    		{% else %}
+            	<!--- Si no esta autenticado no se le presenta menu la unica opcion que tiene es entrar --->
+            	<div id="header">
+            	<ul>
+            	<li><a href="{{ url_for('user.login') }}">Entrar</a> </li>
+				<li><a href="http://paramassi.es">www.paramassi.es</a></li>
+				</ul>
+				</div>
+            {% endif %}
+          	
+        </div>
+		<div class="fondogrisclaro" >
 			
      
-              
-            {% else %}
-            <!--- Si no esta autenticado no se le presenta menu la unica opcion que tiene es entrar --->
-                    <a href="{{ url_for('user.login') }}">Entrar</a>
-            {% endif %}
-            
-        </div>
-        			
- 		<br>
- 		<div class="fondogrisclaro" >
-
-        
         {% block pre_content %}{% endblock %}
 
         {# One-time system messages called Flash messages #}
@@ -116,6 +105,7 @@
         {% block flash_messages %}
             {%- with messages = get_flashed_messages(with_categories=true) -%}
                 {% if messages %}
+                
                     {% for category, message in messages %}
                         {% if category=='error' %}
                             {% set category='danger' %}
@@ -125,6 +115,7 @@
                 {% endif %}
             {%- endwith %}
         {% endblock %}
+        
 
         {% block content %}{% endblock %}
 
@@ -139,8 +130,7 @@
         	<br>
 	        <text-color = "white";>
 	        	
-	        <p style="color:white;" padding-left =10px;> Avda. Jacarandas, 2, Esc. 3 - 4° | Oficina 419 (Edificio Crea)</p>
-	        
+	        <p style="color:white;" padding-left =10px;> Avda. Jacarandas, 2, Esc. 3 - 4° | Oficina 419 (Edificio Crea)</p>  
 			<p style="color:white;">46100 - Burjassot (Valencia, España)</p>
 			<p style="color:white;">Tel.: (+34) 96 136 39 61 - Fax: (+34) 96 136 39 42</p>
 			<p style="color:white;">central@paramassi.es</p>

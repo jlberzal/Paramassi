@@ -4,24 +4,55 @@
 
 <br>
 <br>
-<div class="box-grey" > 
 
-<h1>User Profile</h1>
+<div style="background-color:white; width: 440px; position: relative; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);  padding: 20px; margin-left:auto; margin-right:auto; ">
+	
+<h3>Cambiar datos de perfil</h3>
 
-<p><a href="{{ url_for('user.change_password') }}">Change password</a></p>
+	<style>	
+		input[type=text] {
+    		font: 1em sans-serif;
+			/* Para darle el mismo tamaño a todos los campos de texto */
+    		width: 400px;
+    		height:25px;
+    		padding: 2px; 
+    		vertical-align:top; 	
+    	
+  			 /* Para armonizar el look&feel del borde en los campos de texto */
+    		border: 1px solid #999;
+    		border-radius: 5px;
+			}
+		</style>
 
-{% from "common/form_macros.html" import render_field, render_submit_field %}
-<form action="" method="POST" class="form" role="form">
-    <div class="col-sm-6 col-md-5 col-lg-4">
+	{% from "common/form_macros.html" import render_field, render_submit_field %}
+	<form action="" method="POST" class="form" role="form">
     {{ form.hidden_tag() }}
+     
+	<p><b>Nombre</b></p>
 
-    {{ render_field(form.first_name, tabindex=240) }}
+	
+	{{ form.first_name }}
+	<br>
+	<br>
+	<p><b>Apellido</b></p>
 
-    {{ render_field(form.last_name, tabindex=250) }}
+	{{ form.last_name }}
+	<br>
+    <br>
+    <br>
 
-    {{ render_submit_field(form.submit, tabindex=280) }}
+		
+	<div style="float: right"; >
+	
+	<p><a href="{{ url_for('user.change_password') }}">Cambiar password</a></p>
+	
+	</div>
+	
+    <br>
+    <br>
+    {{ form.submit }}
+	<br>
     </div>
-  </div>
 
 </form>
 

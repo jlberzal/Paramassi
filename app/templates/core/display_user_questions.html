@@ -3,14 +3,15 @@
 {% block content %}
 		
 		<br>
-  		<div class="box-grey-center">
-  		{% if current_user.is_admin() %}
+		{% if current_user.is_admin() %}
   		
   		{% else %}
        	<h3> Preguntas de {{ current_user.first_name or current_user.user_auth.username }}</h3>
 		{% endif %}
-		
+		<div style="background-color:white; width: 80%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); margin-left:auto; margin-right:auto; ">
+	
 		{% for question in questions %}
+		
 		
 		<div class=q_text>
 		
