@@ -1,0 +1,36 @@
+<!doctype html>
+
+		
+<title>Test document</title>
+<link rel="stylesheet" href="/static/app/testpdf.css">
+<body>
+        <section>
+        
+        	{% if TipoC == "C1" %}  <p> C1 </p>
+        	{% else %} <p> NO C1 </p> {% endif %}
+        	
+            <h1><a href="http://packages.python.org/Flask-WeasyPrint/">
+                Flask-WeasyPrint</a> demo</h1>
+            <nav>Get this document <a href="/foo.pdf">as PDF</a> or
+                 <a href="/foo.png">as PNG</a>.</nav>
+            <p>This vector graph was generated dynamically:</p>
+            <img src="{{ url_for('static', filename = 'Paramassi_logo.png') }}" width="200" height="42">
+            <img src=graph?data={{ data|join(',')
+                }}&amp;labels={{ labels|join(',') }}>
+        </section>
+    ''',
+
+    'graph.svg': '''
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="1600" height="1000" viewBox="0 0 160 100">
+        <style>
+            text { text-anchor: middle; font-size: 10px }
+        </style>
+        {% for i, (label, value, color) in series %}
+            <rect x="{{ 10 + i * 50 }}" y="{{ 75 - value }}"
+                  width="40" height="{{ value }}"
+                  fill="{{ color }}" stroke="#333" rx="5" ry="5" />
+            <text x="{{ 30 + i * 50 }}" y="90">{{ label }}</text>
+        {% endfor %}
+        </svg>
+    ''',

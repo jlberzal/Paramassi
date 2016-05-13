@@ -1,0 +1,62 @@
+@page {
+    margin: 3cm 2cm;
+    padding-left: 1.5cm;
+    @top-center {
+        content: "Paramassi";
+        width: 100%;
+        vertical-align: bottom;
+        border-bottom: .5pt solid;
+        margin-bottom: .7cm;
+    }
+    @bottom-center {
+        font-size: 80%;
+        content: "Página " counter(page) " de " counter(pages);
+        width=100%
+
+        border-bottom: .5pt solid;
+     }
+   }
+@media all {
+	.page-break	{ display: none; }
+}
+
+@media print {
+	.page-break	{ display: block; page-break-before: always; }
+}
+   
+html, body { font: 9pt/1.25 Fontin, serif !important; -weasy-hyphens: auto }
+body { text-align: justify; padding: 0 !important;
+       background: none !important; 
+       counter-reset: chapter;      /* Create a chapter counter scope */}
+hr.navbar { display: none }
+
+div.index { font: 12pt/1.25 Fontin, serif !important; -weasy-hyphens: auto 
+	page-break-before: auto !important; -weasy-bookmark-level: none;
+    margin-top: 0 !important;
+	}
+
+div.h0 { 
+	font: 24pt/1.25 Fontin, serif
+	page-break-before: auto !important; -weasy-bookmark-level: none;
+    margin-top: 0 !important;
+    counter-reset: section;      /* Set section to 0 */
+	}
+
+
+h1:before {
+    content: counter(chapter) ". ";
+    counter-increment: chapter;  /* Add 1 to chapter */
+}
+h1 { 
+	page-break-before: auto !important; -weasy-bookmark-level: none;
+    margin-top: 0 !important;
+    counter-reset: section;      /* Set section to 0 */
+	}
+	
+h2:before {
+    content: counter(chapter) "." counter(section) " ";
+    counter-increment: section;
+    font-family: inherit !important
+}
+
+h1, h2, h3, h4 { font-family: inherit !important }

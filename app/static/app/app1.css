@@ -1,0 +1,156 @@
+/**** element styles ****/
+/**** Estilos desarrollados para la aplicación de Paramassi ****/
+
+.main-menu {background-color: darkred; width: 100%; float:left; } 
+
+@font-face {
+  font-family: GreyscaleBasicBoldItalic;
+  src:url('Greyscale_Basic_Bold_Italic.ttf'); 
+}
+
+
+h3 {
+    color: black;
+    font-size: large;
+    text-transform: uppercase;
+    font-family: GreyscaleBasicBoldItalic; 
+    margin-left: 20px;
+}
+/*** Contenedores ***/
+
+.without-margins {background-color: darkgrey	; width: 100%; float:left; }  
+.fondogrisclaro {background-color: #E4E4E4; width: 100%; min-height: 700px; padding: 10px }   
+.banda-gris {background-color: #636363; width: 100%; padding: 35px;float:left;  }  			
+.datos-cuna {background-color: #E4E4E4; margin: 5px; padding: 10px; width: 360px; float: left; border: 0px solid grey; }   
+.datos-cuna2 {background-color: white;padding: 7px; border: 0px solid black; position: relative; box-shadow: 10px 10px 5px 0px rgba(209,209,209,1);}
+
+.whitebox {background-color: white;padding: 10px; border: 0px solid black; min-height: 300px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);}  
+
+
+
+.box-grey {background-color: grey;  margin: 10px; padding: 10px; width: 440px; float: left; }     
+
+.box-darkred {background-color: darkred;  margin: 10px; padding: 10px; width: 370px; float: left; }     
+
+
+.box-grey-center {background-color: grey;  width: 60%; margin: auto; padding: 10px;}     
+
+.box-darkgrey {background-color: darkgrey; padding: 22px; border: 0px solid black;}     
+.box-grey2 {background-color: lightgrey; border-radius: 10px; padding: 20px ;}     
+
+
+/*** Pestanhas ***/
+  
+.box-tab1 {background-color: lightblue; text-color: white; height: 40px; width: 70px; text-align: right; font-family: GreyscaleBasicBoldItalic;
+			float: left;  padding-top: 6px;padding-right: 6px;  margin: 0 10px 0 0; border: 0px  solid grey; } 
+.box-hitab1 {background-color: white; color white; width: 70px; height: 40px; text-align: right; font-family: GreyscaleBasicBoldItalic;
+			float: left; padding-top: 6px; padding-right: 6px; border: 0px; margin: 0 10px 0 0;} 
+  
+.box-tab {background-color: lightblue; color: black; width: 70px;  height: 40px; text-align: right; font-family: GreyscaleBasicBoldItalic;
+			float: left;  padding-right: 5px; padding-top: 4px;  margin: 0 10px 0 0;} 
+.box-hitab {background-color: white; color: black; width: 70px;  height: 40px; text-align: right;font-family: GreyscaleBasicBoldItalic;
+			float: left;  padding-right: 5px; padding-top: 4px;  margin: 0 10px 0 0;} 
+
+.without-margins {background-color: darkred; width: 100%; float:left; }     			
+
+div.i2 {
+   font: 1em sans-serif;
+    float: right; 
+    background-color: white;
+    text-color: black;
+    
+    /* Para darle el mismo tamaño a todos los campos de texto */
+    width: 130px;
+    padding: 2px; 
+    padding-left: 10px; 
+    margin: 1px; margin-right: 30 px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    /* Para armonizar el look&feel del borde en los campos de texto */
+    border: 1px solid #999;
+    border-radius: 5px;
+    }
+
+
+hr { border-color: #cccccc; margin: 0px; }
+
+/**** header, main and footer divs 
+.header-title { font-size: 30px; }
+
+/**** class-based style modifiers
+
+.no-margins { margin: 0px; }
+
+.with-margins { margin: 10px; }
+
+.col-centered { float: none; margin: 0 auto; } ***/
+
+/*** El tipo de texto por defecto de la aplicacion ***/
+
+body { font-family: Arial, serif;}
+
+/*** Los tipos de texto del menu ***/
+
+ #header ul {
+		list-style: none;
+		padding: 0;
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 120%;
+		text-align: center;
+		
+    }
+    
+	#header li {
+		float: left;
+		color: black
+		border: 1px solid #bbb;
+		<!--- border-bottom-width: 0;--->
+		font-weight: bold;
+
+		margin: 0;
+    }
+    
+	#header a {
+		text-decoration: none;
+		display: block;
+		
+		padding: 0.24em 1em;
+		color: white;
+		font-weight: bold;
+		width: 16em;
+		text-align: center;
+    }
+	
+	#header a:hover {
+		background: darkgrey;
+	}
+	
+	#header #selected {
+		border-color: white;
+		border-bottom-width: 0;
+	}
+	
+	#header #selected a {
+		position: relative;
+		top: 0px;
+		background: white;
+		color: black;
+		font-weight: bold;
+	}
+	
+	#content {
+		border: 1px solid black;
+		clear: both;
+		padding: 0 1em;
+	}
+	
+	h1 {
+		margin: 0;
+		padding: 0 0 1em 0;
+
+	}
+
+.group:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
+        p { margin: 0 0 10px 0; }
+

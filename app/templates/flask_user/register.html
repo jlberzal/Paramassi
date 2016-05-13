@@ -4,12 +4,15 @@
 
 {% from "flask_user/_macros.html" import render_field, render_submit_field %}
 
+<br>
+<br>
+<br>
 
 <h3>Registro de nuevos usuarios</h1>
 
 <form action="" method="POST" novalidate formnovalidate class="form" role="form">
 
-	<div class = "box-grey">
+	<div class = "datos-cuna">
     {{ form.hidden_tag() }}
 
     {# Username or Email #}
@@ -23,7 +26,7 @@
             <div class="col-xs-6 text-right">
                 {% if user_manager.enable_register %}
                     <a href="{{ url_for('user.login') }}" tabindex='290'>
-                        {%trans%}Está registrado? Entrar.{%endtrans%}</a>
+                        {%trans%}¿Estás registrado? Entra{%endtrans%}</a>
                 {% endif %}
             </div>
         </div>

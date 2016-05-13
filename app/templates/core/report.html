@@ -1,0 +1,450 @@
+<!doctype html>
+
+
+<title>Informe de proteccion Paramassi</title>
+<link rel="stylesheet" href="/static/app/report.css">
+<body>
+<section>
+
+<center><img src="{{ url_for('static', filename = 'Paramassi_logo_print.png') }}"></center>
+
+
+<br>
+<div class="h0"> INFORME DE PROTECCION DE TALUDES </div>
+
+ 
+<div class="page-break"></div>
+
+Indice
+<br><br><br><br><br><br><br><br>
+
+{% if form.TipoProt.data == "ProActive" %}
+
+<p>1) DATOS DE PARTIDA</p>
+<p>2) ANÁLISIS DE ESTABILIDAD</p>
+<p>2.1) Modelo de rotura</p>
+<p>2.2) Coeficiente de seguridad inicial</p>
+<p>2.3) Medidas de estabilización</p>
+<p>2.4) Fuerza resultante</p>
+<p>2.5) Resistencia de la malla</p>
+<p>2.6) Resistencia a tracción de los anclajes</p>
+<p>2.6.1 Tensión admisible del acero</p>
+<p>2.6.2 Arrancamiento</p>
+<p>2.6.3 Deslizamiento entre el acero y la lechada</p>
+<p>2.7) Resistencia a cortante de los anclajes</p>
+<p>2.8) Coeficiente de seguridad final</p>
+<p>3) CONCLUSIÓN</p>
+
+{%elif form.TipoProt.data == "ProActiveST" %}
+<p>1) DATOS DE PARTIDA</p>
+<p>2) ANÁLISIS DE ESTABILIDAD</p>
+<p>2.1) Modelo de rotura</p>
+<p>2.2) Coeficiente de seguridad inicial</p>
+<p>2.3) Medidas de estabilización</p>
+<p>2.4) Fuerza resultante</p>
+<p>2.5) Sistema de malla reforzada</p>
+<p>2.6) Bulones</p>
+<p>2.6.1 Tensión admisible del acero</p>
+<p>2.6.2 Arrancamiento</p>
+<p>2.6.3 Deslizamiento entre el acero y la lechada</p>
+<p>2.7) Coeficiente de seguridad final</p>
+<p>3) CONCLUSIÓN</p>
+
+{%else %}
+<p>1) DATOS DE PARTIDA</p>
+<p>2) ANÁLISIS DE ESTABILIDAD</p>
+<p>2.1) Modelo de rotura</p>
+<p>2.2) Coeficiente de seguridad inicial</p>
+<p>2.3) Medidas de estabilización</p>
+<p>2.4) Fuerza resultante</p>
+<p>2.5) Cable de cosido</p>
+<p>2.6) Resistencia de la red</p>
+<p>2.7) Bulones</p>
+<p>2.7.1 Tensión admisible del acero</p>
+<p>2.7.2 Arrancamiento</p>
+<p>2.7.3 Deslizamiento entre el acero y la lechada</p>
+<p>2.7) Coeficiente de seguridad final</p>
+<p>3) CONCLUSIÓN</p>
+{% endif %}
+            
+<div class="page-break"></div>
+ 
+<h1> DATOS DE PARTIDA </H1>
+<p> Los datos geométricos de la cuña analizada y los parámetros geotécnicos utilizados para los cálculos de estabilidad de la misma son los siguientes:</p>
+
+{% if form.TipoC.data == "C2" %}
+<p>• Altura, h1: {{ form.h1.data }}<p>
+<p>• Altura, h2: {{ form.h2.data }}<p>
+
+{%else %}
+<p>• Altura, h: {{ form.h1.data }}<p>
+{%endif%}
+
+<p>• Espesor, d: {{ form.d.data }}<p>
+
+{% if form.TipoC.data == "C3" or form.TipoC.data == "C4" %}
+<p> • Longitud, L: {{ form.L.data }}<p>
+{% endif %}
+
+{% if form.TipoC.data == "C3"%}
+<p>• Densidad: {{ form.Dens.data }}<p>
+{% else %}
+<p>• Inclinación, b: {{ form.b.data }}<p>
+<p>• Cohesión: {{ form.Coh.data }}<p>
+<p>• Roz. Interno, Φ: {{ form.Roz.data }}<p>
+<p>• Densidad: {{ form.Dens.data }}<p>
+<p>• Ac. Sísmica: {{ form.AcSis.data }}<p>
+{% endif %}
+
+ 
+<div class="page-break"></div>
+
+<h1> ANÁLISIS DE ESTABILIDAD </H1>         
+<h2> Modelo de rotura </h2>
+<p>Se ha realizado un análisis de estabilidad considerando la formación de una cuña cuya superficie de rotura está próxima a la cara exterior del macizo y cuyo peso se considera representativo de los distintos bloques que se pueden desprender a nivel superficial. El siguiente croquis muestra la geometría considerada.<p>
+
+{% if form.TipoC.data == "C1" %}
+<center><img src="{{ url_for('static', filename = 'helpc1.png') }}" ></center>
+{% elif form.TipoC.data == "C2" %}
+<center><img src="{{ url_for('static', filename = 'helpc2.png') }}" ></center>
+{% elif form.TipoC.data == "C3" %}
+<center><img src="{{ url_for('static', filename = 'helpc3.png') }}" ></center>
+{% elif form.TipoC.data == "C4" %}
+<center><img src="{{ url_for('static', filename = 'helpc4.png') }}" ></center>
+{% endif %}
+
+{% if form.TipoC.data != "C3" %}
+
+<h2> Coeficiente de seguridad inicial</h2>
+<p> Para el cálculo del coeficiente de seguridad de la cuña considerada en la situación inicial, es decir sin tener en cuenta las medidas de estabilización, se ha utilizado la siguiente expresión:</p>
+
+{% if form.TipoC.data == "C1" %}
+<img src="{{ url_for('static', filename = 'FSC1C4.png') }}" >
+{% elif form.TipoC.data == "C2" %}
+<br> <img src="{{ url_for('static', filename = 'FSC2.png') }}" >
+{% elif form.TipoC.data == "C4" %}
+<br> <img src="{{ url_for('static', filename = 'FSC1C4.png') }}" >
+{% endif %}
+
+<p>Siendo:</p>
+<p>• Fe: Fuerzas estabilizadoras</p>
+<p>• Fd: Fuerzas desestabilizadoras<p/>
+<p>• c: Cohesión</p>
+<p>• Lr: Superficie de rotura</p>
+<p>• P: Peso de la cuña</p>
+<p>• S: Fuerza sísmica horizontal</p>
+<p>• αr: Pendiente de la línea de rotura</p>
+<p>• Φ: Ángulo de rozamiento</p>
+
+<p>Con los datos de partida mencionados anteriormente se obtiene el siguiente coeficiente de seguridad:</p>
+<br>
+<center>FS = {{ form.FSI.data | round(3) }} </center>
+
+{% endif %} 
+
+<h2> Medidas de estabilización</h2>
+<p>Se han analizado las siguientes medidas para controlar los desprendimientos:</p>
+{% if form.TipoProt.data == "ProActive" %} 
+<h3> Malla de triple torsión anclada en coronación </h3>
+<p>• Tipo de Malla: {{ form.TipoMalla.data }}</p>
+<p>• Resistencia unitaria de la malla: {{ form.R1.data*1.67 }} kN/m2</p>
+
+<h3>• Anclajes de coronación</h3>
+<p>		- Separación(m): {{ form.DistCor.data | round(3) }} </p>
+<p>		- Longitud(m): {{ form.LongBulon.data | round(3) }} </p>
+<p>		- Diámetro de acero(mm): {{ form.DiamAcero.data}} </p>
+
+{% else %}
+{% if form.TipoProt.data == "ProActiveST" %} 
+<h3>Malla de triple torsión </h3>
+<p>• Tipo de Malla: {{ form.TipoMalla.data }}</p>
+<p>		- Resistencia unitaria de la malla: {{ (form.R1.data * 1.67 | round(3))}} kN/m2</p>
+<p>		- Cable de cosido de {{ form.TipoCableRefuerzo.data}} mm </p>
+
+{% elif (form.TipoProt.data == "NetProtect") %}
+<h3>Red de Cable ({{form.TipoRedNP.data}})</h3>
+<p>		- Resistencia unitaria: {{form.R1.data * 1.67 | round(3)}} kN/m2</p>
+<p>		- Cable de cosido de {{ form.TipoCableRefuerzo.data}} mm </p>
+
+{%else %}
+<h3>Red de Anillos ({{form.TipoRedNPST.data}})</h3>
+<p>		- Resistencia unitaria: (form.R1.data * 1.67 | round(3) kN/m2</p>
+<p>		- Cable de cosido de {{ form.TipoCableRefuerzo.data}} mm </p>
+{%endif%}
+
+<h3>Cuadrícula de bulones</h3>
+<p>- Separación Horzontal (m): {{ form.SH_B.data}} </p>
+<p>- Separación Vertical (m): {{ form.SV_B.data}}</p>
+<p>- Longitud(m): {{ form.LongBulon.data}} </p>
+<p>- Diámetro de acero(mm): {{ form.DiamAcero.data}} </p>
+{% endif%}
+
+<h2>Fuerza resultante</h2>
+<p>A continuación se va a proceder a calcular la fuerza resultante de todas las solicitaciones para posteriormente comparar ésta con la capacidad resistente de cada uno de los elementos del sistema propuesto.</p>
+<p>Se ha considerado como solicitación del sistema la resultante de las fuerzas en la dirección en que se produce el movimiento. Así mismo se ha considerado que una vez iniciado dicho movimiento la componente de cohesión deja de tener un efecto estabilizador sobre la cuña y por tanto no se ha tenido en cuenta para reducir la solicitación resultante. La fuerza resultante, Fr, viene determinada por la siguiente expresión:</p>
+
+{% if form.TipoC.data == "C1" %}
+<img src="{{ url_for('static', filename = 'FRC1.png') }}">
+{% elif form.TipoC.data == "C2" %}
+<br> <img src="{{ url_for('static', filename = 'FRC2.png') }}">
+{% elif form.TipoC.data == "C3" %}
+<br> <img src="{{ url_for('static', filename = 'FRC3.png') }}">
+{% elif form.TipoC.data == "C4" %}
+<br> <img src="{{ url_for('static', filename = 'FRC4.png') }}">
+{% endif %}
+
+<p>Se ha considerado un coeficiente de mayoración de cargas de 1,25 para tener en cuenta la naturaleza dinámica del desprendimiento.</p>
+
+<p>De la expresión anterior se obtiene el siguiente valor para la fuerza resultante:</p>
+<center>FR(kN) = {{form.FR.data | round(3)}}</center>
+
+
+{% if form.TipoProt.data == "ProActive" %} 
+<h2>Resistencia de la malla</h2>
+<p>La carga máxima que puede soportar la malla de triple torsión viene determinada por su resistencia a tracción directa RD. La carga de trabajo R1u viene determinada por:</p>
+<center>R1u=RD/Fs</center>
+<p>Siendo: </p>
+<p> - R1u: Resistencia minorada unitaria de la malla (FS=1,67) </p>
+<p>De la expresión anterior se obtiene el siguiente valor de R1 (resistencia por metro de ancho):</p>
+<center>R1(kN)  = {{form.R1.data| round(3)}}</center>
+<p>Se comprueba por tanto que  la resistencia a rotura de la malla de triple torsión es mayor que la fuerza que la solicita, R1 > Fr.
+
+<h2>Resistencia a tracción de los anclajes</h2>
+<p>Para el cálculo a tracción de los anclajes de coronación se ha seguido la “Guía para el diseño y la ejecución de anclajes al terreno en obras de carretera” elaborada por la Dirección General de Carreteras.</p>
+<p>La carga nominal que solicita cada anclaje, PNd, viene determinada por la siguiente expresión:</p>
+<img src="{{ url_for('static', filename = 'PNdMTT.png') }}">
+<p>Siendo:</p>
+<p>sh: Separación horizontal</p>
+<p>Se ha considerado un coficiente de mayoración de 1,5 para la carga por considerarse la misma como una acción permanente.</p>
+<p>De la expresión anterior se obtiene el siguiente valor de PNd:</p>
+<center>PNd (kN) ={{ form.PNd.data | round(3)}}</center>
+
+<h3>Tensión admisible del acero</h3>
+<p>La máxima fuerza admisible en el acero, P1lim, es la menor de las siguientes condiciones, referentes al límite elástico y de rotura del acero:</p>
+<img src="{{ url_for('static', filename = 'P1MTT.png') }}">
+<p>Siendo:</p>
+<p>• fpk: Límite de rotura del acero del bulón. 550N/mm2</p>
+<p>• fyk: Límite elástico del acero del bulón. 500N/mm2</p>
+<p>• AT: Sección de acero del bulón para un diámetro de {{form.DiamAcero.data}}mm</p>
+<p>De la expresión anterior se obtiene el siguiente valor de P1lim:</p>
+<p>P1lim(kN)={{form.P1.data| round(3)}}</p>
+<p>Se comprueba por tanto que la carga límite del anclaje por rotura del acero es mayor que la carga nominal mayorada, P1lim > PNd.</p>
+
+<h3>Arrancamiento</h3>
+<p>La máxima solicitación que puede que puede aguantar un bulón sin que se produzca fallo por arrancamiento del bulbo viene determinada por la siguiente expresión:</p>
+<img src="{{ url_for('static', filename = 'P3MTT.png') }}">
+<img src="{{ url_for('static', filename = 'GRAFBUL.png') }}">
+<p> Siendo:</p>
+<p>• Lb: Longitud de bulbo</p>
+<p>• Dn: Diámetro  perforación  : {{form.DiamPerf.data}} mm</p>
+<p>• Aadm: Adherencia admisible frente al deslizamiento o arrancamiento que rodea el bulbo.</p>
+<p>La adherencia admisible se obtiene minorando la adherencia límite, alim, con el coeficiente para anclajes permanentes:</p>
+<img src="{{ url_for('static', filename = 'AADMMTT.png') }}">
+<p>De las expresiones anteriores se obtiene el siguiente valor de P3lim:</p>
+<center>P3lim(kN)= {{form.P3.data | round(3)}}</center>
+<p>Se comprueba por tanto que la carga límite del bulón por arrancamiento del bulbo es mayor que la carga nominal mayorada, P3lim > PNd.</p>
+
+<h3>Deslizamiento entre el acero y la lechada</h3>
+<p>La carga límite del bulón por deslizamiento, P2lim,  viene determinada por la siguiente expresión:</p>
+<img src="{{ url_for('static', filename = 'P2MTT.png') }}">
+</p>Siendo:<p>
+</p>• τlim: Adherencia límite entre tirante y lechada.<p>
+</p>• Pt: Perímetro nominal del tirante.<p>
+</p>La adherencia límite entre tirante y lechada se obtiene de la siguiente expresión:</p>
+<img src="{{ url_for('static', filename = 'TAUMTT.png') }}">
+<p>Siendo:</p>
+<p>• fck: Resistencia característica de la lechada: {{form.fck.data}} MPa</p>
+<p>En general para la lechada se recomienda no utilizar cementos de clase resistente inferior a 42,5 y utilizar una relación agua/cemento entre 0,6 y 0,4. Con estas prescripciones la resistencia característica de la lechada debe superar los 25MPa. Esta recomendación es de carácter general, no únicamente para mejorar la adherencia entre acero y lechada.</p>
+<p>De las expresiones anteriores se obtiene el siguiente valor de P2lim:</p>
+<center>P2lim(kN)={{form.P2.data| round(3)}}</center>
+<p>Con estos valores se comprueba por tanto que la carga limite que puede soportar el bulón por deslizamiento es superior a la carga nominal mayorada que lo solicita, P2lim>PNd.</p>
+
+<h2>Resistencia a cortante de los anclajes</h2>
+<p>La máxima solicitación a cortante que puede aguantar cada anclaje, Vrd, viene determinada por la siguiente expresión:</p>
+<br> <img src="{{ url_for('static', filename = 'VRDMTT.png') }}">
+<p>De la expresión anterior se obtiene el siguiente valor de Vrd:</p>
+<center>Vrd(kN)  = {{form.R2.data| round(3)}}</center>
+<p>Con lo cual se comprueba que la resistencia a cortante de cada anclaje es mayor que la carga nominal mayorada que lo solicita, Vrd>Pnd.</p>
+
+<h2>Coeficiente de seguridad final</h2>
+<p>El coeficiente de seguridad final de la cuña analizada teniendo en cuenta el efecto de las medidas de estabilización propuestas se obtiene de la siguiente expresión:</p>
+<img src="{{ url_for('static', filename = 'FSFTT.png') }}">
+<p>La ecuación anterior tiene en cuenta los siguientes modos de fallo del sistema:</p>
+<p>• Rotura de la malla de triple torsión</p>
+<p>• Rotura a cortante de los anclajes de coronación</p>
+<p>• Rotura a tracción del acero del bulón</p>
+<p>• Deslizamiento entre la barra del bulón y la lechada</p>
+<p>• Arrancamiento total del bulón</p>
+<p>De esta ecuación se obtiene el siguiente valor para el coeficiente de seguridad del sistema, según los modos de fallo mencionados anteriormente:</p>
+<center>FSf = {{form.FSfinal.data | round(3)}}</center>
+<p>Este valor indica que el conjunto del sistema es estable, siendo los márgenes de seguridad obtenidos con las medidas propuestas superiores a los valores mínimos admisibles para este tipo de actuaciones.</p>
+
+{% else %}
+
+{% if form.TipoProt.data == "ProActiveST" %} 
+<h2>Sistema de malla reforzada</h2>
+<p>El sistema de protección se compone de una malla de triple torsión reforzada con cable de acero, disponiendo este último en forma de rombo uniendo las cabezas de los bulones de anclaje. Para el cálculo de la resistencia del sistema se ha considerado la suma de las resistencias de la malla y la distribución de cables de acero.</p>
+<p>La máxima solicitación que puede aguantar el sistema de cables de refuerzo, R2, es la siguiente:</p>
+<img src="{{ url_for('static', filename = 'R2MAR.png') }}">
+<p>Siendo:</p>
+<p>• R2: Resistencia del conjunto de cables de refuerzo</p>
+<p>• sv: Separación vertical.</p>
+<p>• sh: Separación horizontal.</p>
+<p>• R2u: Resistencia minorada de cada cable (FSacero=1,15)</p>
+<p>De la expresión anterior se obtiene el siguiente valor de R2:</p>
+<p>R2(kN)  = {{form.R2.data| round(3)}}</p>
+<p>La carga máxima que puede soportar la malla de triple torsión viene determinada por la siguiente expresión:</p>
+<center>R1 = (RP / 1,67)·sv·sh</center>
+<p>Siendo:<p>
+<p>• RP: Resistencia de la malla frente al punzonamiento <p>
+<p>De la expresión anterior se obtiene el siguiente valor de R1:</p>
+<p>R1(kN)  ={{form.R1.data}}</p>
+<p>El valor de la resistencia del conjunto de malla y cable de refuerzo será por tanto:</p>
+<center>Rmar = R1 + R2 </center>
+<p>Siendo:</p>
+<p>• Rmar: Resistencia del sistema de malla reforzada</p>
+<p>De la expresión anterior se obtiene el siguiente valor de Rmar:</p>
+<center>Rmar(kN)  ={{form.R1R2.data}}</center>
+<p>Por lo tanto, la resistencia del sistema compuesto por la malla de triple torsión y el cable de refuerzo es mayor que la fuerza que lo solicita, Rmar > Fr.</p>
+
+{%else%}
+<h2> Cable de cosido</h2>
+<p>La máxima solicitación que puede aguantar el sistema de cables de cosido, R2, es la siguiente:</p>
+<img src="{{ url_for('static', filename = 'R2NET.png') }}">
+<p>Siendo:</p>
+<p>• R2: Resistencia del conjunto de cables de cosido.</p>
+<p>• sv: Separación vertical.</p>
+<p>• sh: Separación horizontal.</p>
+<p>• R2u: Resistencia minorada de cada cable (FSacero=1,15)</p>
+<p>De la expresión anterior se obtiene el siguiente valor de R2:</p>
+<center>R2(kN) = {{form.R2.data| round(3)}}</center>
+<p>Con lo cual se comprueba que la resistencia del conjunto de cables de cosido es mayor que la fuerza que ejerce la cuña sobre ellos, R2>Fr.</p>
+<h2>Resistencia de la red</h2>
+<p>La carga máxima que puede soportar la red viene determinada por la siguiente expresión:</p>
+<center>R1 = R1u·sv·sh</center>
+<p>Siendo:</p>
+<p>• R1u: Resistencia minorada unitaria de la red (FS=1,67) </p>
+<p>De la expresión anterior se obtiene el siguiente valor de R1:</p>
+<center>R1(kN)  = {{form.R1.data| round(3)}}</center>
+<p>Por lo tanto, la resistencia de toda la superficie de red es mayor que la fuerza que la solicita, R1> Fr.</p>
+{%endif%}
+
+     
+<h2>Bulones</h2>
+<p>Para el cálculo de los bulones se ha seguido la “Guía para el diseño y la ejecución de anclajes al terreno en obras de carretera” elaborada por la Dirección General de Carreteras.</p>
+<p>La carga nominal que solicita cada bulón, PNd, viene determinada por la siguiente expresión:</p>
+<img src="{{ url_for('static', filename = 'PNDBUL.png') }}">
+<p>Siendo:</p>
+<p>• sv: Separación vertical = {{form.SV_B.data}}</p>
+<p>• sh: Separación horizontal = {{form.SH_B.data}}</p>
+<p>Se ha considerado un coficiente de mayoración de 1,5 para la carga por considerarse la misma como una acción permanente.</p>
+<p>De la expresión anterior se obtiene el siguiente valor de PNd:</p>
+<center>PNd (kN) = {{form.PNd.data| round(3)}}</center>
+<h3>Tensión admisible del acero</h3>
+<p>La máxima fuerza admisible en el acero, P1lim, es la menor de las siguientes condiciones, referentes al límite elástico y de rotura del acero:</p>
+<img src="{{ url_for('static', filename = 'P1BUL.png') }}">
+<p>Siendo:</p>
+<p>• fpk: Límite de rotura del acero del bulón. 550N/mm2</p>
+<p>• fyk: Límite elástico del acero del bulón. 500N/mm2</p>
+<p>• AT: Sección de acero del bulón </p>
+<p>De la expresión anterior se obtiene el siguiente valor de P1lim:</p>
+<p>P1lim(kN)= )= {{form.P1.data | round(3)}}</p>
+<p>Se comprueba por tanto que la carga límite del bulón por rotura del acero es mayor que la carga nominal mayorada, P1lim >PNd.</p>
+
+<h3>Arrancamiento</h3>
+<p>La máxima solicitación que puede que puede aguantar un bulón sin que se produzca fallo por arrancamiento del bulbo viene determinada por la siguiente expresión:</p>
+
+<img src="{{ url_for('static', filename = 'P3BUL.png') }}">
+
+<img src="{{ url_for('static', filename = 'GRAFBUL.png') }}">
+ 
+<p>Siendo:</p>
+<p>• Lb: Longitud de anclaje = )= {{form.LongBulon.data}}</p>
+<p>• Dn: Diámetro  perforación  = {{form.DiamPerf.data}}</p>
+<p>• Aadm: Adherencia admisible frente al deslizamiento o arrancamiento que rodea el bulbo.</p>
+<p>La adherencia admisible se obtiene minorando la adherencia límite, alim, con el coeficiente para anclajes permanentes:</p>
+
+<img src="{{ url_for('static', filename = 'AADMBUL.png') }}">
+
+<p>De las expresiones anteriores se obtiene el siguiente valor de P3lim:</p>
+<p>P3lim(kN)= )= {{form.P3.data | round(3)}}</p>
+<p>Se comprueba por tanto que la carga límite del bulón por arrancamiento del bulbo es mayor que la carga nominal mayorada, P3lim >PNd.</p>
+
+<h3>Deslizamiento entre el acero y la lechada</h3>
+<p>La carga límite del bulón por deslizamiento, P2lim,  viene determinada por la siguiente expresión:</p>
+
+<img src="{{ url_for('static', filename = 'P2BUL.png') }}">
+
+<p>Siendo:</p>
+<p>• τlim: Adherencia límite entre tirante y lechada.</p>
+<p>• Pt: Perímetro nominal del tirante.</p>
+<p>La adherencia límite entre tirante y lechada se obtiene de la siguiente expresión:</p>
+
+<img src="{{ url_for('static', filename = 'TAUBUL.png') }}">
+
+<p>Siendo:</p>
+<p>• fck: Resistencia característica de la lechada: {{form.fck.data}}</p>
+<p>En general para la lechada se recomienda no utilizar cementos de clase resistente inferior a 42,5 y utilizar una relación agua/cemento entre 0,6 y 0,4. Con estas prescripciones la resistencia característica de la lechada debe superar los 25MPa. Esta recomendación es de carácter general, no únicamente para mejorar la adherencia entre acero y lechada. </p>
+<p>De las expresiones anteriores se obtiene el siguiente valor de P2lim:</p>
+<center>P2lim(kN)= {{form.P2.data | round(3)}}</center>
+<p>Con estos valores se comprueba por tanto que la carga limite que puede soportar el bulón por deslizamiento es superior a la carga nominal mayorada que lo solicita, P2lim>PNd.</p>
+<h2>Coeficiente de seguridad final</h2>
+<p>El coeficiente de seguridad final de la cuña analizada teniendo en cuenta el efecto de las medidas de estabilización propuestas se obtiene de la siguiente expresión:</p>
+<img src="{{ url_for('static', filename = 'FSFBUL.png') }}">
+<p>La ecuación anterior tiene en cuenta los siguientes modos de fallo del sistema:</p>
+<p>• Rotura del conjunto malla más cable de refuerzo</p>
+<p>• Rotura a tracción del acero del bulón</p>
+<p>• Deslizamiento entre la barra del bulón y la lechada</p>
+<p>• Arrancamiento total del bulón</p>
+<p>De esta ecuación se obtiene el siguiente valor para el coeficiente de seguridad del sistema, según los modos de fallo mencionados anteriormente:</p>
+<center>FSf ={{form.FSfinal.data| round(3)}}</center>
+<p>Este valor indica que el conjunto del sistema es estable, siendo los márgenes de seguridad obtenidos con las medidas propuestas superiores a los valores mínimos admisibles para este tipo de actuaciones.</p>
+
+{% endif %}
+ 
+<div class="page-break"></div>
+<h1> CONCLUSION  </h1>
+
+<p>Del estudio realizado se desprende que la solución analizada cumple todas condiciones estructurales para retener el desprendimiento de la cuña superficial considerada. Por tanto se proponen las siguientes medidas de estabilización:</p>
+{% if form.TipoProt.data == "ProActive" %} 
+<p>• Malla de triple torsión anclada en coronación </p>
+<p>• Tipo de Malla: {{ form.TipoMalla.data }}</p>
+<p>• Resistencia unitaria de la malla: {{ form.R1.data*1.67 }}</p>
+<br>
+<p>• Anclajes de coronación</p>
+<p>		- Separación(m): {{ form.DistCor.data | round(3) }} </p>
+<p>		- Longitud(m): {{ form.LongBulon.data | round(3) }} </p>
+<p>		- Diámetro de acero(mm): {{ form.DiamAcero.data}} </p>
+
+{% else %}
+
+{% if form.TipoProt.data == "ProActiveST" %} 
+<p>• Malla de triple torsión </p>
+<p>• Tipo de Malla: {{ form.TipoMalla.data }}</p>
+<p>		- Resistencia unitaria de la malla: {{ (form.R1.data * 1,67 | round(3))}}</p>
+<p>		- Cable de cosido de {{ form.TipoCableRefuerzo.data}} mm >/p>
+
+{% elif (form.TipoProt.data == "NetProtect") %}
+<p>• Red de Cable ({{form.TipoRedNP.data}})</p>
+<p>		- Resistencia unitaria: </p>
+<p>		- Cable de cosido de {{ form.TipoCableRefuerzo.data}} mm >/p>
+
+{%else %}
+<p>• Red de Anillos ({{form.TipoRedNPST.data}})</p>
+<p>		- Resistencia unitaria: </p>
+<p>		- Cable de cosido de {{ form.TipoCableRefuerzo.data}} mm >/p>
+
+{%endif%}
+<h3>Cuadrícula de bulones</h3>
+<p>- Separación Horzontal (m): {{ form.SH_B.data}} </p>
+<p>- Separación Vertical (m): {{ form.SV_B.data}}</p>
+<p>- Longitud(m): {{ form.LongBulon.data}} </p>
+<p>- Diámetro de acero(mm): {{ form.DiamAcero.data}} </p>
+
+{%endif%}
+
+
+
+
+
+

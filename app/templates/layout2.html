@@ -1,0 +1,159 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Paramassi</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Optional apple-touch-icon
+        <link rel="apple-touch-icon" href="apple-touch-icon.png"> -->
+        <!-- Place favicon.ico in the root directory -->
+
+        <!-- HTML5 boilerplate CSS --->
+        <link rel="stylesheet" href="/static/html5boilerplate/css/normalize.css"
+        <link rel="stylesheet" href="/static/html5boilerplate/css/main.css">
+        <script src="/static/html5boilerplate/js/modernizr-2.8.3.min.js"></script>
+
+        <!-- Application specific CSS-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/app/app.css">
+        
+        <!-- CSS para la aplicacion de Paramssi --->
+        
+        <link rel="stylesheet" href="/static/app/app2.css">
+
+       	</head>
+    	<body>
+        {% block body %}
+        <!-- Application specific HTML -->
+        <!-- En la esquina superior derecha aparece el nomnbre del usuario o enlace para entrar --->
+         
+        <div id="header-div" class="clearfix with-margins">
+            <div class="pull-left"><a href="{{ url_for('core.home_page') }}"><img src="{{ url_for('static', filename = 'Paramassi_logo.png') }}" width="200" height="42"></a></div>
+            <div class="pull-right">
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('core.user_profile_page') }}">{{ current_user.first_name or current_user.user_auth.username }}</a>
+                    &nbsp; | &nbsp;
+                    <a href="{{ url_for('user.logout') }}">Salir</a>
+                {% else %}
+                    <a href="{{ url_for('user.login') }}">Entrar</a>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!---
+
+		Las opciones de menu genericas que dependen de si el usuario ha entrado y si es normal o admin...
+      	
+        --->
+        
+        
+        <div class="without-margins"> 
+  
+            {% if current_user.is_authenticated %}
+            	{% if current_user.is_admin() %}
+            		{% set navigation_bar = [ 			
+            		('core.list_calculations', 'display_user_calculations', 'Listado de calculos'),
+    				('core.list_questions', 'display_user_questions', 'Historico de preguntas'),
+       				] -%}
+       				
+				{% else %}	
+            
+            	<!--- Se presenta el menu de usuario normal--->
+            
+            		{% set navigation_bar = [ 			
+            		('core.calc_prot', 'calculos', 'Calculo de proteccion'),
+            		('core.list_calculations', 'display_user_calculations', 'Listado de calculos'),
+    				('core.post_question', 'post_question', 'Preguntar'),
+    				('core.list_questions', 'display_user_questions', 'Historico de preguntas'),
+       				('core.user_profile_page', 'user_profile', 'Perfil de usuario')
+ 					] -%}
+					{% set active_page = active_page|default('post_question') -%}
+					
+    			{% endif%}
+    			
+    			    	
+				<div id="header">
+				<ul>
+				{% for href, id, caption in navigation_bar %}
+  					<li{% if id == active_page %} class="selected"{% endif%}>
+  					<a href="{{ url_for(href|e) }}">{{ caption|e }}</a></li>
+				{% endfor %}
+				</ul>
+ 				</div>
+    			
+    		{% else %}
+            	<!--- Si no esta autenticado no se le presenta menu la unica opcion que tiene es entrar --->
+            	<div id="header">
+            	<ul>
+            	<li><a href="{{ url_for('user.login') }}">Entrar</a> </li>
+				<li><a href="http://paramassi.es">www.paramassi.es</a></li>
+				</ul>
+				</div>
+            {% endif %}
+          	
+        </div>
+		<div class="fondogrisclaro" >
+			
+     
+        {% block pre_content %}{% endblock %}
+
+        {# One-time system messages called Flash messages #}
+        
+        {% block flash_messages %}
+            {%- with messages = get_flashed_messages(with_categories=true) -%}
+                {% if messages %}
+                
+                    {% for category, message in messages %}
+                        {% if category=='error' %}
+                            {% set category='danger' %}
+                        {% endif %}
+                        <div class="alert alert-{{category}}">{{ message|safe }}</div>
+                    {% endfor %}
+                {% endif %}
+            {%- endwith %}
+        {% endblock %}
+        
+
+        {% block content %}{% endblock %}
+
+        {% block post_content %}{% endblock %}
+        </div>
+		</div>
+     	<div class="banda-gris"> 
+        <!--- div id="footer-div" class="clearfix with-margins"---> 
+            <div class="pull-right" style="color:white;">&copy; 2016 Paramassi</div>
+
+			<img src="{{ url_for('static', filename = 'paramassi-logo-small.png') }}" width="200" height="42">     
+        	<br>
+	        <text-color = "white";>
+	        	
+	        <p style="color:white;" padding-left =10px;> Avda. Jacarandas, 2, Esc. 3 - 4° | Oficina 419 (Edificio Crea)</p>  
+			<p style="color:white;">46100 - Burjassot (Valencia, España)</p>
+			<p style="color:white;">Tel.: (+34) 96 136 39 61 - Fax: (+34) 96 136 39 42</p>
+			<p style="color:white;">central@paramassi.es</p>
+            
+        </div>
+
+        <!-- Application specific JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+        <!-- HTML5 boilerplate JS -->
+        <script src="/static/html5boilerplate/js/main.js"></script>
+
+        <!-- Optional Google Analytics: change UA-XXXXX-X to be your site's ID.
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='https://www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+        </script>
+        -->
+        {% endblock %}
+    </body>
+</html>

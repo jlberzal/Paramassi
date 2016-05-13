@@ -797,7 +797,8 @@ class CalcForm(Form):
 			NumBulCuna = (self.L.data / self.SH_B.data + 1 )*(self.h1.data/self.SV_B.data + 1)
 		
 		self.PNd.data = self.FR.data*1.5/NumBulCuna
-		
+		print "PNd-----------", self.PNd.data
+	
 		# Tension admisible del acero
 		# a fuerza admisible en el acero, P1lim, es la menor de las siguientes condiciones, 
 		# referentes al limite elastico y de rotura del acero

@@ -22,7 +22,7 @@
         
         <!-- CSS para la aplicacion de Paramssi --->
         
-        <link rel="stylesheet" href="/static/app/app2.css">
+        <link rel="stylesheet" href="/static/app/app1.css">
 
        	</head>
     	<body>
@@ -102,10 +102,10 @@
 
         {# One-time system messages called Flash messages #}
         
+        
         {% block flash_messages %}
             {%- with messages = get_flashed_messages(with_categories=true) -%}
                 {% if messages %}
-                
                     {% for category, message in messages %}
                         {% if category=='error' %}
                             {% set category='danger' %}

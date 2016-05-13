@@ -1,16 +1,11 @@
 
-{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+{% extends "common/page_base1.html" %}  {# common/page_base.html extends layout.html #}
 
 {% block content %}
   	
-  	<!--- Presentacion de resultados de calculo</h1> --->
-  	<!--- El formulario es igual que el de entrada de datos, pero solo de lectura ---> 
+<!--- Presentacion de resultados de calculo</h1> --->
+<!--- El formulario es igual que el de entrada de datos, pero solo de lectura ---> 
   	
-
-
- 
-  	
-
   	<div class="datos-cuna">
        <h3> Datos de Cuña </h3>
        
@@ -377,6 +372,7 @@
 	
  		<tr>
     	<td colspan ="3" >  <font color="black">  Cortante </style></td>
+    	</tr>
   		<tr>
     		<td align="right" float-right:10px  style="font-family: arial; font-weight: bold; padding-right:10px; text-align:right; font-size:10pt; color='black'">  Vr (kN) </style></td>
     		<td> <div class=i3>  {{ form.R2.data | round(3)}} </div> </td>
@@ -392,27 +388,20 @@
     		<td> <div class=i2>  {{ form.FSfinal.data | round(3)}} </div> </td>
       		{% if form.FSfinalCumple.data %} <td align="left"  style="font-family: arial; font-weight: bold; padding-left:6px; text-align:left; font-size:10pt; color: #4CAF50; "> Cumple</style></td>
 			{% else %} <td align="left"  style="font-family: arial; font-weight: bold; padding-left:6px; text-align:left; font-size:10pt; color: #660000; "> No Cumple</style></td>{% endif %}
-		 				
-    	<td> </td>
  		</tr>
+ 		<tr>
+ 		<style>
+			a {
+    		color: red;
+			}
+		</style>
+    	<td colspan ="3" align="right"> <a href="{{ url_for('core.change_calc', calc_id=form.id.data) }}" > Cambiar </td></a></div>
+    	</tr>    
  		</table>
-	
 	<br>
 	<br>
 	<br>
-	<br>
-
-	<style>
-	a {
-    	color: white;
-	}
-	</style>
-
-	<div class="input2" ><a href="{{ url_for('core.change_calc', calc_id=form.id.data) }}" > Cambiar </td></a></div>		 		
-	
-	
-	 	 		
-     	    	
+	<div class="input2" ><a href="{{ url_for('core.pdf', calc_id=form.id.data) }}" > Pdf </td></a></div>		 		
 	{% endif %}
    
  	</div>	

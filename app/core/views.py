@@ -5,6 +5,10 @@
 
 from flask import redirect, render_template, flash, render_template_string, Blueprint,g
 from flask import request, url_for
+
+from flask import send_file
+import StringIO
+
 from flask_user import current_user, login_required, roles_accepted
 from datetime import datetime
 from app import app, db, constants
@@ -14,6 +18,14 @@ from app.core.models import QuestionForm
 from app.core.models import AnswerForm
 from app.core.models import CalcProt
 from app.core.models import CalcForm
+from app.core.pdf_par import generate_pdf
+
+
+from flask import make_response
+
+from reportlab.pdfgen import canvas
+
+
 
 core_blueprint = Blueprint('core', __name__, url_prefix='/')
 
@@ -171,7 +183,7 @@ def calc_prot(TipoC='C1',TipoProt='ProActive'):
 		if form.validate() == False:
 			for field, errors in form.errors.items():
 				for error in errors:
-					flash(u"Error en la entrada: %s - %s" % (getattr(form, field).label.text,error))
+					flash((u"Error en la entrada: %s - %s" % (getattr(form, field).label.text,error)),'error')
 		
 			return render_template('core/calc_prot.html', TipoC = TipoC, TipoProt = TipoProt, form=form)
 			
@@ -396,7 +408,143 @@ def change_prot (TipoProt, calc_id=1):
 	form.TipoProt.data = TipoProt
 
 	return render_template('core/calc_prot.html', TipoC = form.TipoC.data, TipoProt = TipoProt, form=form,  method = "POST")
-		
+
+#pruebas de pdf
+
+
+@app.route('/foo/')
+def document_html():
+    return render_template(
+        'core/test_pdf.html', data=[42, 27.3, 63], labels=['Lorem', 'ipsum', 'sit'])
+
+
+@app.route('/foo/graph')
+def graph():
+    svg = render_template(
+        'graph.svg',
+        # Turn ?data=3,2,1&labels=A,B,C into
+        # [(0, ('A', 3, color0)), (1, ('B', 2, color1)), (2, ('C', 1, color2))]
+        series=enumerate(zip(
+            request.args['labels'].split(','),
+            map(float, request.args['data'].split(',')),
+            app.config['GRAPH_COLORS'])))
+    return svg, 200, {'Content-Type': 'image/svg+xml'}
+
+
+### The code specific to Flask-WeasyPrint follows. Pretty simple, eh?
+
+from flask_weasyprint import render_pdf, HTML
+
+
+@app.route('/foo.pdf')
+def document_pdf():
+	calc_id = 22
+	query = "select id, timestamp, TipoC, h1, h2, d, b, L, Coh, roz, Dens, AcSis, TipoProt, DistCor, SH_B, SV_B, LongBulon, DiamAcero, Adh, fck, DiamPerf, FSI, FR, R1, R1Cumple, R2, R2Cumple, R1R2, R1R2Cumple, PNd,  P1, P1Cumple, P2, P2Cumple, P3, P3Cumple,FSfinal, FSfinalCumple from calculations where id = %s" % calc_id
+	cur = db.session.execute(query)
+	form = CalcForm()
+	results = cur.fetchone()
+	
+	# reutilizamos el template de presentacion de resultados
+	
+	form.id.data = calc_id
+	form.TipoC.data = results[2]
+	form.h1.data= results[3]
+	form.h2.data= results[4]
+	form.d.data= results[5]
+	form.b.data= results[6]
+	form.L.data= results[7]
+	form.Coh.data= results[8]
+	form.Roz.data= results[9]
+	form.Dens.data= results[10]
+	form.AcSis.data= results[11]
+	form.TipoProt.data= results[12]
+	
+	#html = render_template('core/calc_prot.html', TipoC = form.TipoC.data, TipoProt = "NetProtect", form=form,  method = "POST")
+
+	html =render_template('core/test_pdf.html', TipoC = "C1" )
+	print "Html ok"
+	
+	return render_pdf(HTML(string=html))
+
+
+@app.route('/foo.png')
+def document_png():
+    # We didnt bother to make a ``render_png`` helper
+    # but of course you can still use WeasyPrints PNG output.
+    return Response(HTML('/').write_png(), mimetype='image/png')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@core_blueprint.route('pdf/<int:calc_id>', methods=['GET', 'POST'])
+@login_required  # Limits access to authenticated users
+def pdf (calc_id=1):
+
+	
+	query = "select id, timestamp, TipoC, h1, h2, d, b, L, Coh, roz, Dens, AcSis, TipoProt, DistCor, SH_B, SV_B, LongBulon, DiamAcero, Adh, fck, DiamPerf, FSI, FR, R1, R1Cumple, R2, R2Cumple, R1R2, R1R2Cumple, PNd,  P1, P1Cumple, P2, P2Cumple, P3, P3Cumple,FSfinal, FSfinalCumple from calculations where id = %s" % calc_id
+	cur = db.session.execute(query)
+	
+	
+	# reutilizamos el template de presentacion de resultados
+	
+	form = CalcForm()
+	
+	results = cur.fetchone()
+	
+	form.id.data = calc_id
+	form.TipoC.data = results[2]
+	form.h1.data= results[3]
+	form.h2.data= results[4]
+	form.d.data= results[5]
+	form.b.data= results[6]
+	form.L.data= results[7]
+	form.Coh.data= results[8]
+	form.Roz.data= results[9]
+	form.Dens.data= results[10]
+	form.AcSis.data= results[11]
+	form.TipoProt.data= results[12]
+	form.DistCor.data= results[13]
+	form.SH_B.data= results[14]
+	form.SV_B.data= results[15]
+	form.LongBulon.data= results[16]
+	form.DiamAcero.data= results[17]
+	form.Adh.data= results[18]
+	form.fck.data= results[19]
+	form.DiamPerf.data= results[20]
+	form.FSI.data= results[21]
+	form.FR.data= results[22]
+	form.R1.data= results[23]
+	form.R1Cumple.data= results[24]
+	form.R2.data= results[25]
+	form.R2Cumple.data= results[26]
+	form.R1R2.data= results[27]
+	form.R1R2Cumple.data= results[28]
+	form.PNd.data= results[29]
+	form.P1.data= results[30]
+	form.P1Cumple.data= results[31]
+	form.P2.data= results[32]
+	form.P2Cumple.data= results[33]
+	form.P3.data= results[34]
+	form.P3Cumple.data= results[35]
+	form.FSfinal.data= results[36]
+	form.FSfinalCumple.data= results[37]
+	
+	html =render_template('core/report.html', form=form )
+	
+	return render_pdf(HTML(string=html))
+
+
 	
 # Esto tiene que estar al final !!!!!! 
 # Register blueprint
